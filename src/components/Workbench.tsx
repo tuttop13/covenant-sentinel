@@ -34,6 +34,7 @@ export function Workbench() {
   const [arrived, setArrived] = useState(false);
   const [memo, setMemo] = useState<Memo | null>(null);
   const [isFinal, setIsFinal] = useState(false);
+  const [skepticApproved, setSkepticApproved] = useState(true);
   const [confidence, setConfidence] = useState<ConfidenceBreakdown | null>(null);
   const [objections, setObjections] = useState<Objection[]>([]);
   const [viewer, setViewer] = useState<ViewerState | null>(null);
@@ -45,7 +46,7 @@ export function Workbench() {
     return () => esRef.current?.close();
   }, []);
 
-  const startRun = useCallback(() => {
+  const startRun = useCallback((mode: 'live' | 'replay' = 'live') => {
     if (!health || running) return;
     setArrived(true);
     setRunning(true);
@@ -55,7 +56,8 @@ export function Workbench() {
     setConfidence(null);
     setObjections([]);
 
-    const es = new EventSource(`/api/agent/run?docId=${health.arrivalDocId}`);
+    const url = mode === 'replay' ? '/api/agent/run?replay=1' : `/api/agent/run?docId=${health.arrivalDocId}`;
+    const es = new EventSource(url);
     esRef.current = es;
 
     es.onmessage = (msg) => {
@@ -74,9 +76,10 @@ export function Workbench() {
           setConfidence(ev.payload as ConfidenceBreakdown);
           break;
         case 'memo_final': {
-          const p = ev.payload as { memo: Memo; confidence: ConfidenceBreakdown };
+          const p = ev.payload as { memo: Memo; confidence: ConfidenceBreakdown; skepticApproved?: boolean };
           setMemo(p.memo);
           setConfidence(p.confidence);
+          setSkepticApproved(p.skepticApproved ?? true);
           setIsFinal(true);
           break;
         }
@@ -164,7 +167,8 @@ export function Workbench() {
             arrivalDocId={health?.arrivalDocId ?? ''}
             arrived={arrived}
             running={running}
-            onArrive={startRun}
+            onArrive={() => startRun('live')}
+            onReplay={() => startRun('replay')}
             onReset={reset}
             onOpenDoc={(docId) => setViewer({ docId, page: 1 })}
           />
@@ -192,6 +196,7 @@ export function Workbench() {
             confidence={confidence}
             objections={objections}
             isFinal={isFinal}
+            skepticApproved={skepticApproved}
             onOpenCitation={openCitation}
           />
         </section>

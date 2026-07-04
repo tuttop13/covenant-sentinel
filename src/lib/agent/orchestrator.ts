@@ -2,6 +2,7 @@ import { appConfig } from '@/config/app.config';
 import { completeJson } from '@/lib/llm/client';
 import { getDocument } from '@/lib/data/corpus';
 import { toolByName } from '@/lib/tools';
+import { queryLedger } from '@/lib/tools/queryLedger';
 import { computeConfidence } from './confidence';
 import {
   DRAFTER_SYSTEM, INVESTIGATOR_SYSTEM, PLAN_SYSTEM, SKEPTIC_SYSTEM,
@@ -23,6 +24,33 @@ interface PlanResult {
 }
 
 const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n) + ` …[truncated ${s.length - n} chars]` : s);
+
+/**
+ * Code-enforced completeness: the LLM cannot silently drop material one-off
+ * movements from the memo. Any such ledger row missing from flaggedTransactions
+ * is force-added as unexplained — and honestly lowers the confidence score.
+ */
+function materialitySweep(memo: Memo, emit: Emit): void {
+  const m = appConfig.materiality;
+  const oneOff = new Set<string>(m.oneOffCategories);
+  const material = queryLedger({
+    minAbsAmountEur: m.thresholdEur,
+    dateFrom: m.window.from,
+    dateTo: m.window.to,
+    limit: 25,
+  }).rows.filter((r) => oneOff.has(r.category));
+
+  const known = new Set((memo.flaggedTransactions ?? []).map((t) => t.id));
+  const missing = material.filter((r) => !known.has(r.id));
+  if (missing.length === 0) return;
+
+  memo.flaggedTransactions = [
+    ...(memo.flaggedTransactions ?? []),
+    ...missing.map((r) => ({ id: r.id, amountEur: r.amountEur, matched: false })),
+  ];
+  emit('resolution_note', 'Materiality sweep (code-enforced)',
+    `${missing.length} material one-off movement(s) not attributed by the agent — force-listed as unexplained: ${missing.map((r) => r.id).join(', ')}`);
+}
 
 /** Annotate each citation: is the quote a verbatim substring of the cited page? */
 function verifyCitations(memo: Memo): { memo: Memo; verified: number; total: number } {
@@ -146,13 +174,17 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
   let memo = await draft('Drafting memo');
 
   // ---------- Phase 4: SKEPTIC rounds ----------
-  let verdict: SkepticVerdict | null = null;
-  for (let round = 1; round <= cfg.maxSkepticRounds; round++) {
-    emit('phase', `The Skeptic reviews (round ${round})`, 'Adversarial internal challenge before anything reaches a human');
-    verdict = await completeJson<SkepticVerdict>('skeptic', [
+  async function skepticReview(label: string): Promise<SkepticVerdict> {
+    emit('phase', label, 'Adversarial internal challenge before anything reaches a human');
+    return completeJson<SkepticVerdict>('skeptic', [
       { role: 'system', content: SKEPTIC_SYSTEM },
       { role: 'user', content: `INVESTIGATION LOG AND DRAFT MEMO:\n${log}` },
     ]);
+  }
+
+  let verdict: SkepticVerdict | null = null;
+  for (let round = 1; round <= cfg.maxSkepticRounds; round++) {
+    verdict = await skepticReview(`The Skeptic reviews (round ${round})`);
 
     if (verdict.verdict === 'approved' || (verdict.objections ?? []).length === 0) {
       emit('skeptic_verdict', 'The Skeptic approves', 'Memo survives the adversarial checklist', verdict);
@@ -169,10 +201,25 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
     emit('phase', 'Resolving objections', 'Sentinel goes back to the evidence');
     await investigate(cfg.maxResolutionSteps, true);
     memo = await draft('Redrafting memo');
+    log += `\n\nRESOLUTION NOTE: all objections above were investigated and the memo was revised accordingly.`;
     emit('resolution_note', 'Objections addressed', 'Memo revised in light of new evidence');
   }
 
-  // ---------- Phase 5: Confidence + final ----------
+  // Final sign-off pass: the revision that followed the last objections deserves a verdict.
+  if (verdict && verdict.verdict !== 'approved') {
+    verdict = await skepticReview('The Skeptic — final sign-off');
+    if (verdict.verdict === 'approved' || (verdict.objections ?? []).length === 0) {
+      emit('skeptic_verdict', 'The Skeptic approves', 'All objections resolved on final review', verdict);
+      verdict.verdict = 'approved';
+    } else {
+      emit('skeptic_verdict', 'The Skeptic maintains reservations',
+        `${verdict.objections.length} objection(s) still open — reflected in the confidence score`, verdict);
+    }
+  }
+
+  // ---------- Phase 5: Materiality sweep + confidence + final ----------
+  materialitySweep(memo, emit);
+
   const confidence = computeConfidence({
     usedCalcRatio,
     readCovenantClause,
@@ -184,6 +231,7 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
   emit('confidence', `Confidence ${(confidence.total * 100).toFixed(0)}%`,
     'Deterministic score computed from what the agent actually verified', confidence);
 
-  emit('memo_final', `Final memo: ${memo.status}`, memo.title, { memo, confidence });
+  emit('memo_final', `Final memo: ${memo.status}`, memo.title,
+    { memo, confidence, skepticApproved: verdict?.verdict === 'approved' });
   emit('done', 'Run complete');
 }

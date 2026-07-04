@@ -18,7 +18,7 @@ export interface Covenant {
 }
 
 export function Inbox({
-  docs, covenants, arrivalDocId, arrived, running, onArrive, onReset, onOpenDoc,
+  docs, covenants, arrivalDocId, arrived, running, onArrive, onReplay, onReset, onOpenDoc,
 }: {
   docs: CorpusDocument[];
   covenants: Covenant[];
@@ -26,6 +26,7 @@ export function Inbox({
   arrived: boolean;
   running: boolean;
   onArrive: () => void;
+  onReplay: () => void;
   onReset: () => void;
   onOpenDoc: (docId: string) => void;
 }) {
@@ -47,6 +48,13 @@ export function Inbox({
               className="mt-3 w-full rounded-lg border border-indigo-400/50 bg-indigo-500/20 px-3 py-2.5 text-sm font-semibold text-indigo-100 transition-all hover:bg-indigo-500/35 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] disabled:opacity-40"
             >
               📬 Simulate arrival: Q3-2025 filing
+            </button>
+            <button
+              onClick={onReplay}
+              className="mt-1.5 w-full rounded border border-slate-700 px-2 py-1.5 text-[11px] text-slate-400 transition-colors hover:bg-slate-800"
+              title="Instantly replay the last saved live run (no API calls)"
+            >
+              ▶ Replay last live run
             </button>
           </>
         ) : (

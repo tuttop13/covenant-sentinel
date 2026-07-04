@@ -48,6 +48,6 @@ export function queryLedger(q: LedgerQuery): LedgerQueryResult {
     matchCount: rows.length,
     totalCredits,
     totalDebits,
-    rows: rows.slice(0, Math.min(q.limit ?? 15, 40)),
+    rows: rows.slice(0, Math.min(q.limit ?? 10, 25)),
   };
 }

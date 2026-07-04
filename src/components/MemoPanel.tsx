@@ -66,12 +66,13 @@ function ConfidenceBlock({ confidence }: { confidence: ConfidenceBreakdown }) {
 }
 
 export function MemoPanel({
-  memo, confidence, objections, isFinal, onOpenCitation,
+  memo, confidence, objections, isFinal, skepticApproved, onOpenCitation,
 }: {
   memo: Memo | null;
   confidence: ConfidenceBreakdown | null;
   objections: Objection[];
   isFinal: boolean;
+  skepticApproved: boolean;
   onOpenCitation: (c: CitationRef) => void;
 }) {
   if (!memo) {
@@ -95,8 +96,8 @@ export function MemoPanel({
         <h3 className="text-sm font-semibold leading-snug text-slate-100">{memo.title}</h3>
         <div className="flex shrink-0 flex-col items-end gap-1">
           <StatusChip status={memo.status} />
-          <span className={`text-[10px] font-medium uppercase tracking-wider ${isFinal ? 'text-emerald-400' : 'text-amber-400'}`}>
-            {isFinal ? 'Final — Skeptic approved' : 'Draft — under review'}
+          <span className={`text-[10px] font-medium uppercase tracking-wider ${isFinal ? (skepticApproved ? 'text-emerald-400' : 'text-amber-400') : 'text-amber-400'}`}>
+            {isFinal ? (skepticApproved ? 'Final — Skeptic approved' : 'Final — reservations noted') : 'Draft — under review'}
           </span>
         </div>
       </div>
@@ -154,7 +155,7 @@ export function MemoPanel({
                 <p className="font-semibold text-red-200">{o.id} — {o.target}</p>
                 <p className="mt-0.5 text-slate-300">{o.objection}</p>
                 <p className="mt-1 text-slate-400"><span className="font-semibold text-slate-300">Required:</span> {o.requiredAction}</p>
-                {isFinal && <p className="mt-1 font-medium text-emerald-400">✓ Addressed in revised memo</p>}
+                {isFinal && skepticApproved && <p className="mt-1 font-medium text-emerald-400">✓ Addressed in revised memo</p>}
               </div>
             ))}
           </div>

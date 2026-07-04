@@ -42,11 +42,12 @@ export const appConfig = {
   },
 
   agent: {
-    maxInvestigateSteps: 9,
-    maxResolutionSteps: 6,
-    maxSkepticRounds: 2,
+    maxInvestigateSteps: 8,
+    maxResolutionSteps: 5,
+    /** One objection wave + resolution + redraft, then a final sign-off pass. */
+    maxSkepticRounds: 1,
     /** Truncate tool results injected back into the conversation. */
-    maxObservationChars: 3200,
+    maxObservationChars: 2400,
   },
 
   retrieval: {
@@ -75,6 +76,13 @@ export const appConfig = {
       { id: 'leverage', label: 'Max Leverage Ratio', threshold: '≤ 3.50x', clause: '§7.1(a)' },
       { id: 'dscr', label: 'Min Debt Service Coverage', threshold: '≥ 1.25x', clause: '§7.1(b)' },
     ],
+  },
+
+  /** Code-enforced completeness: material one-off movements the memo MUST carry. */
+  materiality: {
+    thresholdEur: 200_000,
+    oneOffCategories: ['legal', 'capex', 'intercompany', 'treasury'],
+    window: { from: '2025-07-01', to: '2025-09-30' },
   },
 
   paths: {

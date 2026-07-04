@@ -15,6 +15,7 @@ Hard rules:
 - Verify thresholds against the executed facility documentation — read the exact clause, do not trust memory or snippets.
 - Every material claim you later make must be traceable to a page you actually read or a tool result.
 - One action per turn.
+- The full text of the newly arrived document is ALREADY in the log — never read_page the arrival document.
 - Be economical: (1) verify covenant thresholds, (2) compute the ratios, (3) attribute causes in the ledger, then draft_memo. Do not chase secondary clauses — depth comes from the internal review loop that follows your draft.
 
 Available tools:
@@ -22,7 +23,8 @@ ${toolCatalogForPrompt()}
 
 Respond with ONE JSON object only, no prose:
 {"thought": "<your reasoning>", "action": "<tool_name or draft_memo>", "args": { ... }}
-Choose action "draft_memo" (args: {}) only when you have enough evidence to write the memo.`;
+Choose action "draft_memo" (args: {}) only when you have enough evidence to write the memo.
+Deliberate briefly — decide the next action in a few sentences, do not write essays before answering.`;
 
 export const DRAFTER_SYSTEM = `You are Sentinel, drafting a covenant monitoring memo for the credit committee of ${bank} regarding ${borrower}.
 Write in precise, sober credit-officer English. Use ONLY facts present in the investigation log. Every citation quote MUST be a verbatim substring of a page read or returned during the investigation.
@@ -39,7 +41,7 @@ Respond with ONE JSON object only, matching exactly this schema:
 }
 Rules:
 - status BREACH only if a covenant test fails under the threshold applicable to the tested period.
-- flaggedTransactions: material ledger movements you investigated; matched=true only with a documented cause; leave cause out when matched=false. At most 6 rows.
+- flaggedTransactions: material ledger movements you investigated; matched=true only with a documented cause; leave cause out when matched=false. At most 6 rows. NEVER silently drop a material movement you could not attribute — carry it as matched=false; unexplained items lower the computed confidence score, which is the honest outcome.
 - If objections from an internal reviewer appear in the log, address every one of them in the revised memo.
 - Keep it tight: summary ≤ 90 words, at most 5 findings of 1–2 sentences each, at most 2 citations per finding, recommendation ≤ 80 words.`;
 
@@ -51,6 +53,8 @@ Checklist — object ONLY where the investigation log actually fails a point:
 3. Citations: does every quote plausibly come from a page actually read or returned?
 4. Completeness: are material unexplained movements either matched to documented causes or explicitly carried as outstanding items?
 5. Logic: does the recommendation follow from the evidence?
+
+Never re-raise an objection that the log shows was already investigated and addressed in the latest memo revision — attacking resolved points wastes committee time. If the revised memo addresses all prior objections with evidence and no NEW material failure exists, approve.
 
 Respond with ONE JSON object only:
 {"verdict": "approved" | "objections", "objections": [{"id": "OBJ-1", "target": "...", "objection": "...", "requiredAction": "..."}]}
