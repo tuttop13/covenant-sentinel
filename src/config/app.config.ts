@@ -15,7 +15,7 @@ export const appConfig = {
     name: 'Covenant Sentinel',
     bank: 'Volta Bank AG',
     borrower: 'Meridian Logistics SA',
-    facility: 'EUR 40,000,000 Senior Term & Revolving Facility (2023)',
+    facility: 'EUR 90,000,000 Senior Term & Revolving Facility (2023)',
   },
 
   llm: {
