@@ -88,11 +88,13 @@ Each successful live run is persisted; the **▶** button replays it instantly w
 
 ## Deploy on Vultr (everything on Vultr)
 
+**Live demo:** http://107.191.46.11 · eval board at http://107.191.46.11/eval
+
 ```bash
 VULTR_API_KEY=<account api key> ./deploy/vultr-deploy.sh
 ```
 
-Creates a compute instance (Paris), clones this repo, builds, and serves on port 80 — inference *and* hosting on Vultr.
+Creates a compute instance (Paris), clones this repo, installs Node, builds, opens the firewall and serves on port 80 via systemd — inference *and* hosting on Vultr. Note: the Vultr Ubuntu image ships `ufw` active with only SSH open; the bootstrap allows port 80 automatically.
 
 ## Judging criteria mapping
 
