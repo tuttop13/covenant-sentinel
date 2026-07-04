@@ -24,23 +24,36 @@ export const appConfig = {
     vultr: {
       baseURL: env('VULTR_INFERENCE_BASE_URL', 'https://api.vultrinference.com/v1'),
       apiKey: vultrApiKey,
-      /** Tool-calling capable model on Vultr Serverless Inference. */
-      model: env('VULTR_MODEL', 'kimi-k2-instruct'),
+      /** Sentinel (plan / investigate / draft) — reasoning model, strong agentic behavior. */
+      model: env('VULTR_MODEL', 'moonshotai/Kimi-K2.6'),
+      /** The Skeptic — deliberately a DIFFERENT brain than the drafter. */
+      skepticModel: env('VULTR_SKEPTIC_MODEL', 'deepseek-ai/DeepSeek-V4-Flash'),
       temperature: 0.2,
-      maxTokens: 2200,
-      requestTimeoutMs: 90_000,
+      /** Reasoning models burn tokens thinking before answering — budgets per phase. */
+      maxTokensByTag: {
+        plan: 5000,
+        investigate: 7000,
+        draft: 16000,
+        skeptic: 10000,
+        default: 8000,
+      } as Record<string, number>,
+      requestTimeoutMs: 120_000,
     },
   },
 
   agent: {
-    maxInvestigateSteps: 12,
-    maxResolutionSteps: 8,
+    maxInvestigateSteps: 9,
+    maxResolutionSteps: 6,
     maxSkepticRounds: 2,
     /** Truncate tool results injected back into the conversation. */
     maxObservationChars: 3200,
   },
 
   retrieval: {
+    /** 'vultron' = VultronRetriever rerank on Vultr; 'keyword' = local BM25-lite.
+     *  Auto-falls back to keyword on any API failure. */
+    provider: env('RETRIEVAL_PROVIDER', vultrApiKey ? 'vultron' : 'keyword') as 'vultron' | 'keyword',
+    rerankModel: env('VULTR_RERANK_MODEL', 'vultr/VultronRetrieverFlash-Qwen3.5-0.8B'),
     topK: 5,
     snippetChars: 260,
   },

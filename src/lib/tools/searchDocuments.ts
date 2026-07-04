@@ -3,10 +3,16 @@ import { getCorpus } from '@/lib/data/corpus';
 import type { SearchResult } from '@/lib/types';
 
 /**
- * Keyword/BM25-lite search over corpus pages.
- * Deliberately provider-shaped: swap in a VultronRetriever/vector-store
- * implementation behind the same signature without touching the agent.
+ * Two retrieval providers behind one signature:
+ *  - 'vultron': VultronRetriever reranker served on Vultr Serverless Inference
+ *  - 'keyword': local BM25-lite (also the automatic fallback on any API failure)
  */
+
+export interface SearchResponse {
+  provider: string;
+  results: SearchResult[];
+  note?: string;
+}
 
 const tokenize = (s: string): string[] =>
   s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -14,18 +20,101 @@ const tokenize = (s: string): string[] =>
 
 const STOP = new Set(['the', 'of', 'and', 'to', 'in', 'for', 'on', 'at', 'by', 'or', 'an', 'be', 'is', 'are', 'any', 'not', 'with', 'that', 'this', 'shall', 'each']);
 
-export function searchDocuments(query: string, opts?: { docType?: string }): SearchResult[] {
-  const qTokens = tokenize(query).filter((t) => !STOP.has(t));
-  if (qTokens.length === 0) return [];
+interface IndexedPage {
+  docId: string;
+  docTitle: string;
+  docType: string;
+  page: number;
+  heading: string;
+  text: string;
+}
 
-  const pages: { docId: string; docTitle: string; docType: string; page: number; heading: string; text: string }[] = [];
+function collectPages(opts?: { docType?: string }): IndexedPage[] {
+  const pages: IndexedPage[] = [];
+  const filter = opts?.docType;
+  // Tolerate the model passing a docId where a docType is expected.
+  const isDocId = !!filter && getCorpus().some((d) => d.id === filter);
   for (const doc of getCorpus()) {
-    if (opts?.docType && doc.type !== opts.docType) continue;
+    if (filter && (isDocId ? doc.id !== filter : doc.type !== filter)) continue;
     for (const p of doc.pages) {
       pages.push({ docId: doc.id, docTitle: doc.title, docType: doc.type, page: p.n, heading: p.heading, text: p.bodyText });
     }
   }
+  return pages;
+}
 
+function makeSnippet(text: string, query: string): string {
+  const qTokens = tokenize(query).filter((t) => !STOP.has(t));
+  const idx = qTokens
+    .map((t) => text.toLowerCase().indexOf(t))
+    .filter((i) => i >= 0)
+    .sort((a, b) => a - b)[0] ?? 0;
+  const start = Math.max(0, idx - 40);
+  return (start > 0 ? '…' : '') + text.slice(start, start + appConfig.retrieval.snippetChars).trim() + '…';
+}
+
+async function vultronSearch(query: string, opts?: { docType?: string }): Promise<SearchResult[]> {
+  const pages = collectPages(opts);
+  const res = await fetch(`${appConfig.llm.vultr.baseURL}/rerank`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${appConfig.llm.vultr.apiKey}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: appConfig.retrieval.rerankModel,
+      query,
+      documents: pages.map((p) => `${p.heading}\n${p.text}`.slice(0, 2400)),
+    }),
+    signal: AbortSignal.timeout(30_000),
+  });
+  if (!res.ok) throw new Error(`rerank HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
+  const data = (await res.json()) as { results: { index: number; relevance_score: number }[] };
+  return data.results
+    .slice(0, appConfig.retrieval.topK)
+    .map((r) => {
+      const p = pages[r.index];
+      return {
+        docId: p.docId,
+        docTitle: p.docTitle,
+        docType: p.docType as SearchResult['docType'],
+        page: p.page,
+        heading: p.heading,
+        snippet: makeSnippet(p.text, query),
+        score: Number(r.relevance_score.toFixed(4)),
+      };
+    });
+}
+
+const emptyNote = (opts?: { docType?: string }) =>
+  `0 results${opts?.docType ? ` with docType="${opts.docType}"` : ''} — retry with broader terms${opts?.docType ? ' or without docType' : ''}. Valid docTypes: agreement, amendment, financials, certificate, filing.`;
+
+export async function searchDocuments(query: string, opts?: { docType?: string }): Promise<SearchResponse> {
+  if (appConfig.retrieval.provider === 'vultron' && appConfig.llm.vultr.apiKey) {
+    try {
+      const results = await vultronSearch(query, opts);
+      return {
+        provider: appConfig.retrieval.rerankModel,
+        results,
+        ...(results.length === 0 ? { note: emptyNote(opts) } : {}),
+      };
+    } catch (e) {
+      console.warn('[search] vultron rerank failed, falling back to keyword:', e);
+    }
+  }
+  const results = keywordSearch(query, opts);
+  return {
+    provider: 'keyword-bm25-local',
+    results,
+    ...(results.length === 0 ? { note: emptyNote(opts) } : {}),
+  };
+}
+
+function keywordSearch(query: string, opts?: { docType?: string }): SearchResult[] {
+  const qTokens = tokenize(query).filter((t) => !STOP.has(t));
+  if (qTokens.length === 0) return [];
+
+  const pages = collectPages(opts);
   const N = pages.length;
   const df = new Map<string, number>();
   const pageTokens = pages.map((p) => tokenize(p.text));
@@ -53,20 +142,13 @@ export function searchDocuments(query: string, opts?: { docType?: string }): Sea
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score)
     .slice(0, appConfig.retrieval.topK)
-    .map(({ p, score }) => {
-      const idx = qTokens
-        .map((t) => p.text.toLowerCase().indexOf(t))
-        .filter((i) => i >= 0)
-        .sort((a, b) => a - b)[0] ?? 0;
-      const start = Math.max(0, idx - 40);
-      return {
-        docId: p.docId,
-        docTitle: p.docTitle,
-        docType: p.docType as SearchResult['docType'],
-        page: p.page,
-        heading: p.heading,
-        snippet: (start > 0 ? '…' : '') + p.text.slice(start, start + appConfig.retrieval.snippetChars).trim() + '…',
-        score: Number(score.toFixed(4)),
-      };
-    });
+    .map(({ p, score }) => ({
+      docId: p.docId,
+      docTitle: p.docTitle,
+      docType: p.docType as SearchResult['docType'],
+      page: p.page,
+      heading: p.heading,
+      snippet: makeSnippet(p.text, query),
+      score: Number(score.toFixed(4)),
+    }));
 }

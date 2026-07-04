@@ -8,7 +8,7 @@ export interface ToolSpec {
   description: string;
   /** Compact usage line shown to the model in the system prompt. */
   usage: string;
-  run: (args: Record<string, unknown>) => unknown;
+  run: (args: Record<string, unknown>) => unknown | Promise<unknown>;
 }
 
 export const TOOLS: ToolSpec[] = [

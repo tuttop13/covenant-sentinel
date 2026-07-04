@@ -1,5 +1,5 @@
 import { appConfig } from '@/config/app.config';
-import { complete, extractJson } from '@/lib/llm/client';
+import { completeJson } from '@/lib/llm/client';
 import { getDocument } from '@/lib/data/corpus';
 import { toolByName } from '@/lib/tools';
 import { computeConfidence } from './confidence';
@@ -64,23 +64,22 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
 
   // ---------- Phase 1: PLAN ----------
   emit('phase', 'Planning', 'Sentinel drafts its investigation plan');
-  const plan = extractJson<PlanResult>(await complete('plan', [
+  const plan = await completeJson<PlanResult>('plan', [
     { role: 'system', content: PLAN_SYSTEM },
     { role: 'user', content: log },
-  ]));
+  ]);
   emit('thought', 'Investigation plan', plan.goal, plan);
   log += `\n\nINVESTIGATION PLAN\nGoal: ${plan.goal}\nSteps: ${plan.steps.join(' | ')}`;
 
   // ---------- Phase 2/4: INVESTIGATE (shared by initial pass and objection resolution) ----------
   async function investigate(maxSteps: number, resolving: boolean): Promise<void> {
     for (let step = 0; step < maxSteps; step++) {
-      const raw = await complete('investigate', [
-        { role: 'system', content: INVESTIGATOR_SYSTEM },
-        { role: 'user', content: `${log}\n\n${investigateInstruction(resolving)}` },
-      ]);
       let decision: InvestigateDecision;
       try {
-        decision = extractJson<InvestigateDecision>(raw);
+        decision = await completeJson<InvestigateDecision>('investigate', [
+          { role: 'system', content: INVESTIGATOR_SYSTEM },
+          { role: 'user', content: `${log}\n\n${investigateInstruction(resolving)}` },
+        ]);
       } catch {
         log += `\n\nNOTE: your previous reply was not valid JSON. Reply with exactly one JSON object.`;
         continue;
@@ -101,7 +100,7 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
       emit('tool_call', `${tool.name}`, JSON.stringify(decision.args), { name: tool.name, args: decision.args });
       let result: unknown;
       try {
-        result = tool.run(decision.args ?? {});
+        result = await tool.run(decision.args ?? {});
       } catch (e) {
         result = { error: e instanceof Error ? e.message : String(e) };
       }
@@ -133,10 +132,10 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
   // ---------- Phase 3: DRAFT ----------
   async function draft(label: string): Promise<Memo> {
     emit('phase', label, 'Writing memo from the investigation log');
-    const memo = extractJson<Memo>(await complete('draft', [
+    const memo = await completeJson<Memo>('draft', [
       { role: 'system', content: DRAFTER_SYSTEM },
       { role: 'user', content: `${log}\n\nDraft the memo now.` },
-    ]));
+    ]);
     const { verified, total } = verifyCitations(memo);
     emit('memo_draft', `Draft memo: ${memo.status}`,
       `${memo.findings?.length ?? 0} findings · ${verified}/${total} citations verified verbatim`, memo);
@@ -150,10 +149,10 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
   let verdict: SkepticVerdict | null = null;
   for (let round = 1; round <= cfg.maxSkepticRounds; round++) {
     emit('phase', `The Skeptic reviews (round ${round})`, 'Adversarial internal challenge before anything reaches a human');
-    verdict = extractJson<SkepticVerdict>(await complete('skeptic', [
+    verdict = await completeJson<SkepticVerdict>('skeptic', [
       { role: 'system', content: SKEPTIC_SYSTEM },
       { role: 'user', content: `INVESTIGATION LOG AND DRAFT MEMO:\n${log}` },
-    ]));
+    ]);
 
     if (verdict.verdict === 'approved' || (verdict.objections ?? []).length === 0) {
       emit('skeptic_verdict', 'The Skeptic approves', 'Memo survives the adversarial checklist', verdict);

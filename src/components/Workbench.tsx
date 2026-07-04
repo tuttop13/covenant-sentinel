@@ -11,10 +11,14 @@ import { PanelTitle } from './ui';
 interface Health {
   provider: 'vultr' | 'mock';
   model: string;
+  skepticModel: string;
+  retrievalModel: string;
   app: { name: string; bank: string; borrower: string; facility: string };
   covenants: Covenant[];
   arrivalDocId: string;
 }
+
+const shortModel = (id: string) => id.split('/').pop() ?? id;
 
 interface ViewerState {
   docId: string;
@@ -129,9 +133,23 @@ export function Workbench() {
               ● Mock mode — no API key
             </span>
           ) : health ? (
-            <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-300">
-              ● Live — {health.model} @ Vultr
-            </span>
+            <div className="flex items-center gap-1.5 text-[10px] font-medium">
+              <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-1 text-emerald-300"
+                title="Sentinel — investigator & drafter">
+                🛰️ {shortModel(health.model)}
+              </span>
+              <span className="rounded-full border border-red-500/40 bg-red-500/10 px-2 py-1 text-red-300"
+                title="The Skeptic — adversarial reviewer (different brain, on purpose)">
+                ⚔️ {shortModel(health.skepticModel)}
+              </span>
+              <span className="rounded-full border border-sky-500/40 bg-sky-500/10 px-2 py-1 text-sky-300"
+                title="Retrieval — reranker over the credit file">
+                🔎 {shortModel(health.retrievalModel)}
+              </span>
+              <span className="ml-1 rounded-full border border-emerald-500/40 bg-emerald-500/15 px-2 py-1 uppercase tracking-wider text-emerald-200">
+                ● Live @ Vultr
+              </span>
+            </div>
           ) : null}
         </div>
       </header>
