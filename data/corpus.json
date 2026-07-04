@@ -1,0 +1,311 @@
+[
+  {
+    "id": "credit-agreement-2023",
+    "title": "Senior Facilities Agreement (2023)",
+    "type": "agreement",
+    "date": "2023-03-15",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "SENIOR FACILITIES AGREEMENT",
+        "bodyText": "SENIOR FACILITIES AGREEMENT\n\nDATED 15 MARCH 2023. MERIDIAN LOGISTICS SA, a société anonyme incorporated in France (the \"Borrower\"), and VOLTA BANK AG as Agent, Arranger and Original Lender.\n\nEUR 70,000,000 SENIOR TERM LOAN FACILITY and EUR 20,000,000 REVOLVING CREDIT FACILITY.\n\nThis Agreement sets out the terms on which the Lenders make the Facilities available to the Borrower for the purpose of refinancing existing indebtedness and financing the general corporate and working capital purposes of the Group.",
+        "bodyHtml": "<p>DATED 15 MARCH 2023. MERIDIAN LOGISTICS SA, a société anonyme incorporated in France (the \"Borrower\"), and VOLTA BANK AG as Agent, Arranger and Original Lender.</p>\n<p>EUR 70,000,000 SENIOR TERM LOAN FACILITY and EUR 20,000,000 REVOLVING CREDIT FACILITY.</p>\n<p>This Agreement sets out the terms on which the Lenders make the Facilities available to the Borrower for the purpose of refinancing existing indebtedness and financing the general corporate and working capital purposes of the Group.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "TABLE OF CONTENTS",
+        "bodyText": "TABLE OF CONTENTS\n\nSection 1. Definitions and Interpretation — page 3. Section 2. The Facilities — page 5. Section 5. Information Undertakings — page 6. Section 7. Financial Covenants — page 7. Section 7.2 Equity Cure — page 8. Section 8. Events of Default — page 9. Section 9. Amendments and Waivers — page 10. Signatures — page 11. Schedule 1. Margin Grid — page 12.",
+        "bodyHtml": "<p>Section 1. Definitions and Interpretation — page 3. Section 2. The Facilities — page 5. Section 5. Information Undertakings — page 6. Section 7. Financial Covenants — page 7. Section 7.2 Equity Cure — page 8. Section 8. Events of Default — page 9. Section 9. Amendments and Waivers — page 10. Signatures — page 11. Schedule 1. Margin Grid — page 12.</p>"
+      },
+      {
+        "n": 3,
+        "heading": "SECTION 1 — DEFINITIONS (A–E)",
+        "bodyText": "SECTION 1 — DEFINITIONS (A–E)\n\n\"Consolidated EBITDA\" means, for any Measurement Period, the consolidated operating profit of the Group before interest, taxation, depreciation and amortisation, adjusted to exclude exceptional, one-off, non-recurring or extraordinary items only to the extent expressly approved by the Majority Lenders in writing.\n\nFor the avoidance of doubt, absent such written approval, exceptional items including litigation settlements shall NOT be excluded from Consolidated EBITDA.\n\n\"Cash and Cash Equivalents\" means cash in hand and credit balances on deposit with a Qualifying Bank, in each case freely available to the Group.",
+        "bodyHtml": "<p>\"Consolidated EBITDA\" means, for any Measurement Period, the consolidated operating profit of the Group before interest, taxation, depreciation and amortisation, adjusted to exclude exceptional, one-off, non-recurring or extraordinary items only to the extent expressly approved by the Majority Lenders in writing.</p>\n<p>For the avoidance of doubt, absent such written approval, exceptional items including litigation settlements shall NOT be excluded from Consolidated EBITDA.</p>\n<p>\"Cash and Cash Equivalents\" means cash in hand and credit balances on deposit with a Qualifying Bank, in each case freely available to the Group.</p>"
+      },
+      {
+        "n": 4,
+        "heading": "SECTION 1 — DEFINITIONS (F–Z)",
+        "bodyText": "SECTION 1 — DEFINITIONS (F–Z)\n\n\"Total Net Debt\" means, at any time, the aggregate amount of all obligations of the Group for or in respect of Borrowings (including drawings under the Revolving Facility), less the aggregate amount of Cash and Cash Equivalents.\n\n\"Measurement Period\" means each period of twelve months ending on the last day of a Financial Quarter (a \"last-twelve-months\" or LTM basis).\n\n\"Leverage Ratio\" means the ratio of Total Net Debt on the last day of a Measurement Period to Consolidated EBITDA for that Measurement Period.\n\n\"Debt Service\" means, for any Measurement Period, the aggregate of interest paid and scheduled repayments of principal falling due during that period.",
+        "bodyHtml": "<p>\"Total Net Debt\" means, at any time, the aggregate amount of all obligations of the Group for or in respect of Borrowings (including drawings under the Revolving Facility), less the aggregate amount of Cash and Cash Equivalents.</p>\n<p>\"Measurement Period\" means each period of twelve months ending on the last day of a Financial Quarter (a \"last-twelve-months\" or LTM basis).</p>\n<p>\"Leverage Ratio\" means the ratio of Total Net Debt on the last day of a Measurement Period to Consolidated EBITDA for that Measurement Period.</p>\n<p>\"Debt Service\" means, for any Measurement Period, the aggregate of interest paid and scheduled repayments of principal falling due during that period.</p>"
+      },
+      {
+        "n": 5,
+        "heading": "SECTION 2 — THE FACILITIES",
+        "bodyText": "SECTION 2 — THE FACILITIES\n\nFacility A: a euro term loan facility in an aggregate amount of EUR 70,000,000, repayable in equal semi-annual instalments of EUR 2,000,000 with the balance due at Final Maturity (15 March 2030).\n\nFacility B: a euro revolving credit facility in an aggregate amount of EUR 20,000,000, available for drawing, repayment and re-drawing until one month prior to Final Maturity. Drawings under Facility B constitute Borrowings for the purposes of Total Net Debt.",
+        "bodyHtml": "<p>Facility A: a euro term loan facility in an aggregate amount of EUR 70,000,000, repayable in equal semi-annual instalments of EUR 2,000,000 with the balance due at Final Maturity (15 March 2030).</p>\n<p>Facility B: a euro revolving credit facility in an aggregate amount of EUR 20,000,000, available for drawing, repayment and re-drawing until one month prior to Final Maturity. Drawings under Facility B constitute Borrowings for the purposes of Total Net Debt.</p>"
+      },
+      {
+        "n": 6,
+        "heading": "SECTION 5 — INFORMATION UNDERTAKINGS",
+        "bodyText": "SECTION 5 — INFORMATION UNDERTAKINGS\n\nThe Borrower shall deliver to the Agent: (a) audited annual consolidated financial statements within 120 days of financial year end; (b) unaudited quarterly consolidated financial statements within 45 days of each Financial Quarter end; and (c) with each set of quarterly financial statements, a Compliance Certificate signed by the CFO setting out computations of the financial covenants in Section 7.1 in reasonable detail.",
+        "bodyHtml": "<p>The Borrower shall deliver to the Agent: (a) audited annual consolidated financial statements within 120 days of financial year end; (b) unaudited quarterly consolidated financial statements within 45 days of each Financial Quarter end; and (c) with each set of quarterly financial statements, a Compliance Certificate signed by the CFO setting out computations of the financial covenants in Section 7.1 in reasonable detail.</p>"
+      },
+      {
+        "n": 7,
+        "heading": "SECTION 7.1 — FINANCIAL COVENANTS",
+        "bodyText": "SECTION 7.1 — FINANCIAL COVENANTS\n\n7.1(a) Leverage. The Borrower shall ensure that the Leverage Ratio in respect of any Measurement Period ending on or after 30 June 2023 does not exceed 3.50:1.00.\n\n7.1(b) Debt Service Coverage. The Borrower shall ensure that the ratio of Consolidated EBITDA to Debt Service in respect of any Measurement Period is not less than 1.25:1.00.\n\nThe financial covenants in this Section 7.1 shall be tested quarterly by reference to each Measurement Period ending on the last day of each Financial Quarter, on the basis of the quarterly financial statements and the related Compliance Certificate.",
+        "bodyHtml": "<p>7.1(a) Leverage. The Borrower shall ensure that the Leverage Ratio in respect of any Measurement Period ending on or after 30 June 2023 does not exceed 3.50:1.00.</p>\n<p>7.1(b) Debt Service Coverage. The Borrower shall ensure that the ratio of Consolidated EBITDA to Debt Service in respect of any Measurement Period is not less than 1.25:1.00.</p>\n<p>The financial covenants in this Section 7.1 shall be tested quarterly by reference to each Measurement Period ending on the last day of each Financial Quarter, on the basis of the quarterly financial statements and the related Compliance Certificate.</p>"
+      },
+      {
+        "n": 8,
+        "heading": "SECTION 7.2 — EQUITY CURE",
+        "bodyText": "SECTION 7.2 — EQUITY CURE\n\nIf the requirements of Section 7.1 are not satisfied for a Measurement Period, the Borrower may, no more than twice over the life of the Facilities and not in consecutive Financial Quarters, procure additional shareholder contributions in cash. Amounts so contributed shall be deemed to increase Consolidated EBITDA for the relevant Measurement Period.",
+        "bodyHtml": "<p>If the requirements of Section 7.1 are not satisfied for a Measurement Period, the Borrower may, no more than twice over the life of the Facilities and not in consecutive Financial Quarters, procure additional shareholder contributions in cash. Amounts so contributed shall be deemed to increase Consolidated EBITDA for the relevant Measurement Period.</p>"
+      },
+      {
+        "n": 9,
+        "heading": "SECTION 8 — EVENTS OF DEFAULT",
+        "bodyText": "SECTION 8 — EVENTS OF DEFAULT\n\n8.1 Non-payment: failure to pay any amount due under the Finance Documents within three Business Days of the due date.\n\n8.2 Financial covenants: failure to comply with Section 7.1, subject to Section 7.2 (Equity Cure), constitutes an Event of Default with immediate effect upon delivery (or required delivery date) of the relevant Compliance Certificate.\n\n8.3 On and at any time after the occurrence of an Event of Default which is continuing, the Agent may cancel the Total Commitments and declare all outstanding Loans immediately due and payable.",
+        "bodyHtml": "<p>8.1 Non-payment: failure to pay any amount due under the Finance Documents within three Business Days of the due date.</p>\n<p>8.2 Financial covenants: failure to comply with Section 7.1, subject to Section 7.2 (Equity Cure), constitutes an Event of Default with immediate effect upon delivery (or required delivery date) of the relevant Compliance Certificate.</p>\n<p>8.3 On and at any time after the occurrence of an Event of Default which is continuing, the Agent may cancel the Total Commitments and declare all outstanding Loans immediately due and payable.</p>"
+      },
+      {
+        "n": 10,
+        "heading": "SECTION 9 — AMENDMENTS AND WAIVERS",
+        "bodyText": "SECTION 9 — AMENDMENTS AND WAIVERS\n\n9.1 Any term of the Finance Documents may be amended or waived only in writing with the consent of the Majority Lenders and the Borrower, and any such amendment shall be documented as a numbered Amendment Agreement executed by the parties.\n\n9.2 Amendment Agreements form part of the Finance Documents and prevail over this Agreement to the extent of any inconsistency, for the periods and on the terms specified therein.",
+        "bodyHtml": "<p>9.1 Any term of the Finance Documents may be amended or waived only in writing with the consent of the Majority Lenders and the Borrower, and any such amendment shall be documented as a numbered Amendment Agreement executed by the parties.</p>\n<p>9.2 Amendment Agreements form part of the Finance Documents and prevail over this Agreement to the extent of any inconsistency, for the periods and on the terms specified therein.</p>"
+      },
+      {
+        "n": 11,
+        "heading": "EXECUTION PAGE",
+        "bodyText": "EXECUTION PAGE\n\nSIGNED for and on behalf of MERIDIAN LOGISTICS SA by its Directeur Général. SIGNED for and on behalf of VOLTA BANK AG as Agent, Arranger and Original Lender. Executed in Paris on 15 March 2023 in three originals. [STAMP: VOLTA BANK AG — LEGAL DEPARTMENT — EXECUTED COPY]",
+        "bodyHtml": "<p>SIGNED for and on behalf of MERIDIAN LOGISTICS SA by its Directeur Général. SIGNED for and on behalf of VOLTA BANK AG as Agent, Arranger and Original Lender. Executed in Paris on 15 March 2023 in three originals. [STAMP: VOLTA BANK AG — LEGAL DEPARTMENT — EXECUTED COPY]</p>"
+      },
+      {
+        "n": 12,
+        "heading": "SCHEDULE 1 — APPLICABLE MARGIN GRID",
+        "bodyText": "SCHEDULE 1 — APPLICABLE MARGIN GRID\n\nLeverage Ratio greater than 3.00:1.00 — Margin 3.25% p.a. Leverage Ratio between 2.50 and 3.00 — Margin 2.75% p.a. Leverage Ratio below 2.50:1.00 — Margin 2.25% p.a. The Applicable Margin adjusts two Business Days after receipt of each Compliance Certificate.",
+        "bodyHtml": "<p>Leverage Ratio greater than 3.00:1.00 — Margin 3.25% p.a. Leverage Ratio between 2.50 and 3.00 — Margin 2.75% p.a. Leverage Ratio below 2.50:1.00 — Margin 2.25% p.a. The Applicable Margin adjusts two Business Days after receipt of each Compliance Certificate.</p>"
+      }
+    ]
+  },
+  {
+    "id": "amendment-1",
+    "title": "Amendment Agreement No. 1",
+    "type": "amendment",
+    "date": "2024-05-10",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "AMENDMENT AGREEMENT NO. 1",
+        "bodyText": "AMENDMENT AGREEMENT NO. 1\n\nDATED 10 MAY 2024, between MERIDIAN LOGISTICS SA and VOLTA BANK AG as Agent, relating to the Senior Facilities Agreement dated 15 March 2023.\n\nThe parties agree: (i) the deadline in Section 5(b) for delivery of the Q1-2024 quarterly financial statements only is extended from 45 to 60 days; (ii) the notice details of the Agent in Section 11 are updated to 14 Quai de la Rapée, 75012 Paris.\n\nAll other terms of the Agreement remain in full force and effect. This letter is designated a Finance Document.",
+        "bodyHtml": "<p>DATED 10 MAY 2024, between MERIDIAN LOGISTICS SA and VOLTA BANK AG as Agent, relating to the Senior Facilities Agreement dated 15 March 2023.</p>\n<p>The parties agree: (i) the deadline in Section 5(b) for delivery of the Q1-2024 quarterly financial statements only is extended from 45 to 60 days; (ii) the notice details of the Agent in Section 11 are updated to 14 Quai de la Rapée, 75012 Paris.</p>\n<p>All other terms of the Agreement remain in full force and effect. This letter is designated a Finance Document.</p>"
+      }
+    ]
+  },
+  {
+    "id": "amendment-2",
+    "title": "Amendment Agreement No. 2 — Covenant Holiday",
+    "type": "amendment",
+    "date": "2025-06-20",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "AMENDMENT AGREEMENT NO. 2 — RECITALS",
+        "bodyText": "AMENDMENT AGREEMENT NO. 2 — RECITALS\n\nDATED 20 JUNE 2025, between MERIDIAN LOGISTICS SA and VOLTA BANK AG as Agent (with the consent of the Majority Lenders), relating to the Senior Facilities Agreement dated 15 March 2023.\n\nWHEREAS the Borrower has presented to the Lenders a fleet electrification programme involving aggregate capital expenditure of up to EUR 12,000,000 across 2025 and 2026, partly funded by drawings under the Revolving Facility;\n\nWHEREAS the Lenders wish to accommodate the temporary increase in leverage resulting from the programme.",
+        "bodyHtml": "<p>DATED 20 JUNE 2025, between MERIDIAN LOGISTICS SA and VOLTA BANK AG as Agent (with the consent of the Majority Lenders), relating to the Senior Facilities Agreement dated 15 March 2023.</p>\n<p>WHEREAS the Borrower has presented to the Lenders a fleet electrification programme involving aggregate capital expenditure of up to EUR 12,000,000 across 2025 and 2026, partly funded by drawings under the Revolving Facility;</p>\n<p>WHEREAS the Lenders wish to accommodate the temporary increase in leverage resulting from the programme.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "AMENDMENT AGREEMENT NO. 2 — OPERATIVE PROVISIONS",
+        "bodyText": "AMENDMENT AGREEMENT NO. 2 — OPERATIVE PROVISIONS\n\nClause 2.1 (Covenant Holiday). Notwithstanding Section 7.1(a) of the Agreement, for the Measurement Periods ending 30 September 2025 and 31 December 2025 only, the Borrower shall ensure that the Leverage Ratio does not exceed 4.00:1.00.\n\nClause 2.2 (Reversion). For each Measurement Period ending on or after 31 March 2026, the ratio in Section 7.1(a) shall revert to 3.50:1.00 without further action of the parties.\n\nClause 2.3 (Minimum Liquidity Condition). During the period referred to in Clause 2.1, the Borrower shall maintain Cash and Cash Equivalents of not less than EUR 3,000,000, tested on the last day of each Financial Quarter.\n\nClause 2.4 This Amendment Agreement is a Finance Document and prevails over the Agreement to the extent of any inconsistency.",
+        "bodyHtml": "<p>Clause 2.1 (Covenant Holiday). Notwithstanding Section 7.1(a) of the Agreement, for the Measurement Periods ending 30 September 2025 and 31 December 2025 only, the Borrower shall ensure that the Leverage Ratio does not exceed 4.00:1.00.</p>\n<p>Clause 2.2 (Reversion). For each Measurement Period ending on or after 31 March 2026, the ratio in Section 7.1(a) shall revert to 3.50:1.00 without further action of the parties.</p>\n<p>Clause 2.3 (Minimum Liquidity Condition). During the period referred to in Clause 2.1, the Borrower shall maintain Cash and Cash Equivalents of not less than EUR 3,000,000, tested on the last day of each Financial Quarter.</p>\n<p>Clause 2.4 This Amendment Agreement is a Finance Document and prevails over the Agreement to the extent of any inconsistency.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q4-2023",
+    "title": "Quarterly Financial Statements Q4-2023",
+    "type": "financials",
+    "date": "2023-12-31",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q4-2023 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q4-2023 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 47,200 thousand\nOperating expenses: EUR (41,300) thousand\nEBITDA: EUR 5,900 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 1,908 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">47,200</td></tr><tr><td>Operating expenses</td><td class=\"num\">(41,300)</td></tr><tr><td>EBITDA</td><td class=\"num\">5,900</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">1,908</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q4-2023 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q4-2023 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 5,200 thousand\nTotal borrowings (incl. revolver drawings): EUR 84,000 thousand\nTotal net debt: EUR 78,800 thousand\nLTM EBITDA (last twelve months): EUR 0 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">5,200</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">84,000</td></tr><tr><td>Total net debt</td><td class=\"num\">78,800</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">0</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q1-2024",
+    "title": "Quarterly Financial Statements Q1-2024",
+    "type": "financials",
+    "date": "2024-03-31",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q1-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q1-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 44,800 thousand\nOperating expenses: EUR (39,200) thousand\nEBITDA: EUR 5,600 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 1,692 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">44,800</td></tr><tr><td>Operating expenses</td><td class=\"num\">(39,200)</td></tr><tr><td>EBITDA</td><td class=\"num\">5,600</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">1,692</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q1-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q1-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 5,400 thousand\nTotal borrowings (incl. revolver drawings): EUR 83,500 thousand\nTotal net debt: EUR 78,100 thousand\nLTM EBITDA (last twelve months): EUR 0 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">5,400</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">83,500</td></tr><tr><td>Total net debt</td><td class=\"num\">78,100</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">0</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q2-2024",
+    "title": "Quarterly Financial Statements Q2-2024",
+    "type": "financials",
+    "date": "2024-06-30",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q2-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q2-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 48,800 thousand\nOperating expenses: EUR (42,700) thousand\nEBITDA: EUR 6,100 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 2,052 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">48,800</td></tr><tr><td>Operating expenses</td><td class=\"num\">(42,700)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,100</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">2,052</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q2-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q2-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 5,600 thousand\nTotal borrowings (incl. revolver drawings): EUR 83,000 thousand\nTotal net debt: EUR 77,400 thousand\nLTM EBITDA (last twelve months): EUR 0 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">5,600</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">83,000</td></tr><tr><td>Total net debt</td><td class=\"num\">77,400</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">0</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q3-2024",
+    "title": "Quarterly Financial Statements Q3-2024",
+    "type": "financials",
+    "date": "2024-09-30",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q3-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q3-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 50,400 thousand\nOperating expenses: EUR (44,100) thousand\nEBITDA: EUR 6,300 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 2,196 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">50,400</td></tr><tr><td>Operating expenses</td><td class=\"num\">(44,100)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,300</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">2,196</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q3-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q3-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 5,800 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,800 thousand\nTotal net debt: EUR 77,000 thousand\nLTM EBITDA (last twelve months): EUR 23,900 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">5,800</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,800</td></tr><tr><td>Total net debt</td><td class=\"num\">77,000</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">23,900</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q4-2024",
+    "title": "Quarterly Financial Statements Q4-2024",
+    "type": "financials",
+    "date": "2024-12-31",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q4-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q4-2024 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 48,000 thousand\nOperating expenses: EUR (42,000) thousand\nEBITDA: EUR 6,000 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 1,980 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">48,000</td></tr><tr><td>Operating expenses</td><td class=\"num\">(42,000)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,000</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">1,980</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q4-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q4-2024 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 6,100 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,500 thousand\nTotal net debt: EUR 76,400 thousand\nLTM EBITDA (last twelve months): EUR 24,000 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">6,100</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,500</td></tr><tr><td>Total net debt</td><td class=\"num\">76,400</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">24,000</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q1-2025",
+    "title": "Quarterly Financial Statements Q1-2025",
+    "type": "financials",
+    "date": "2025-03-31",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q1-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q1-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 46,400 thousand\nOperating expenses: EUR (40,600) thousand\nEBITDA: EUR 5,800 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 1,836 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">46,400</td></tr><tr><td>Operating expenses</td><td class=\"num\">(40,600)</td></tr><tr><td>EBITDA</td><td class=\"num\">5,800</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">1,836</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q1-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q1-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 5,900 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,300 thousand\nTotal net debt: EUR 76,400 thousand\nLTM EBITDA (last twelve months): EUR 24,200 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">5,900</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,300</td></tr><tr><td>Total net debt</td><td class=\"num\">76,400</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">24,200</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "fin-q2-2025",
+    "title": "Quarterly Financial Statements Q2-2025",
+    "type": "financials",
+    "date": "2025-06-30",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q2-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
+        "bodyText": "Q2-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 49,600 thousand\nOperating expenses: EUR (43,400) thousand\nEBITDA: EUR 6,200 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 2,124 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">49,600</td></tr><tr><td>Operating expenses</td><td class=\"num\">(43,400)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,200</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">2,124</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q2-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q2-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 6,000 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,000 thousand\nTotal net debt: EUR 76,000 thousand\nLTM EBITDA (last twelve months): EUR 24,300 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">6,000</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,000</td></tr><tr><td>Total net debt</td><td class=\"num\">76,000</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">24,300</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "cert-q1-2025",
+    "title": "Compliance Certificate Q1-2025",
+    "type": "certificate",
+    "date": "2025-03-31",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-03-31",
+        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-03-31\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.21:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.62:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
+        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.21:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.62:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
+      }
+    ]
+  },
+  {
+    "id": "cert-q2-2025",
+    "title": "Compliance Certificate Q2-2025",
+    "type": "certificate",
+    "date": "2025-06-30",
+    "pages": [
+      {
+        "n": 1,
+        "heading": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-06-30",
+        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-06-30\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-06-30.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.13:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.64:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
+        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-06-30.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.13:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.64:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
+      }
+    ]
+  },
+  {
+    "id": "q3-2025-filing",
+    "title": "Q3-2025 Quarterly Filing — Meridian Logistics SA",
+    "type": "filing",
+    "date": "2025-11-10",
+    "arrivesViaInbox": true,
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q3-2025 MANAGEMENT COMMENTARY",
+        "bodyText": "Q3-2025 MANAGEMENT COMMENTARY\n\nThe third quarter of 2025 was marked by two exceptional developments. First, the Group recognised a EUR 1,200 thousand charge in operating expenses in connection with the final settlement of the Aurora Freight SARL litigation (payment reference LEGAL-SETTLE-0847, August 2025). Second, the Group accelerated its fleet electrification programme with the purchase of twelve electric trucks and associated charging infrastructure from Nordvolt Fleet Systems for EUR 2,800 thousand (reference EQUIP-PURCH-0912), funded through a drawing under the Revolving Facility in September 2025.\n\nOperating performance was further affected by elevated fuel costs and the non-renewal of a regional distribution contract, together reducing EBITDA by approximately EUR 800 thousand relative to the prior quarter.\n\nManagement notes that quarter-end liquidity decreased to EUR 3,800 thousand, and expects gradual recovery of operating margins in Q4-2025.",
+        "bodyHtml": "<p>The third quarter of 2025 was marked by two exceptional developments. First, the Group recognised a EUR 1,200 thousand charge in operating expenses in connection with the final settlement of the Aurora Freight SARL litigation (payment reference LEGAL-SETTLE-0847, August 2025). Second, the Group accelerated its fleet electrification programme with the purchase of twelve electric trucks and associated charging infrastructure from Nordvolt Fleet Systems for EUR 2,800 thousand (reference EQUIP-PURCH-0912), funded through a drawing under the Revolving Facility in September 2025.</p>\n<p>Operating performance was further affected by elevated fuel costs and the non-renewal of a regional distribution contract, together reducing EBITDA by approximately EUR 800 thousand relative to the prior quarter.</p>\n<p>Management notes that quarter-end liquidity decreased to EUR 3,800 thousand, and expects gradual recovery of operating margins in Q4-2025.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q3-2025 CONSOLIDATED INCOME STATEMENT",
+        "bodyText": "Q3-2025 CONSOLIDATED INCOME STATEMENT\n\nRevenue: EUR 32,000 thousand\nOperating expenses (incl. exceptional items): EUR (28,000) thousand\nEBITDA: EUR 4,000 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 540 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">32,000</td></tr><tr><td>Operating expenses (incl. exceptional items)</td><td class=\"num\">(28,000)</td></tr><tr><td>EBITDA</td><td class=\"num\">4,000</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">540</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 3,
+        "heading": "Q3-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q3-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 3,800 thousand\nTotal borrowings (incl. revolver drawings): EUR 85,200 thousand\nTotal net debt: EUR 81,400 thousand\nLTM EBITDA (last twelve months): EUR 22,000 thousand\nLTM interest paid: EUR 4,600 thousand\nLTM scheduled principal repayments: EUR 4,000 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">3,800</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">85,200</td></tr><tr><td>Total net debt</td><td class=\"num\">81,400</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">22,000</td></tr><tr><td>LTM interest paid</td><td class=\"num\">4,600</td></tr><tr><td>LTM scheduled principal repayments</td><td class=\"num\">4,000</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  }
+]
