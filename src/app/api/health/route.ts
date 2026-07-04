@@ -9,11 +9,12 @@ export async function GET() {
     provider: appConfig.llm.provider,
     model: live ? appConfig.llm.vultr.model : 'scripted-mock',
     skepticModel: live ? appConfig.llm.vultr.skepticModel : 'scripted-mock',
+    triageModel: live ? appConfig.llm.vultr.triageModel : 'scripted-mock',
     retrievalModel:
       appConfig.retrieval.provider === 'vultron' ? appConfig.retrieval.rerankModel : 'keyword-bm25-local',
     keyPresent: Boolean(appConfig.llm.vultr.apiKey),
     app: appConfig.app,
     covenants: appConfig.demo.covenants,
-    arrivalDocId: appConfig.demo.arrivalDocId,
+    scenarios: appConfig.demo.scenarios,
   });
 }

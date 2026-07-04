@@ -1,5 +1,6 @@
 import { appConfig } from '@/config/app.config';
 import { getCorpus } from '@/lib/data/corpus';
+import { recordUsage } from '@/lib/llm/client';
 import type { SearchResult } from '@/lib/types';
 
 /**
@@ -69,7 +70,13 @@ async function vultronSearch(query: string, opts?: { docType?: string }): Promis
     signal: AbortSignal.timeout(30_000),
   });
   if (!res.ok) throw new Error(`rerank HTTP ${res.status}: ${(await res.text()).slice(0, 200)}`);
-  const data = (await res.json()) as { results: { index: number; relevance_score: number }[] };
+  const data = (await res.json()) as {
+    results: { index: number; relevance_score: number }[];
+    usage?: { prompt_tokens?: number; total_tokens?: number };
+  };
+  // Rerank usage for the cost meter — estimated at 4 chars/token when the API omits it.
+  const estTokens = Math.round(pages.reduce((s, p) => s + Math.min(p.text.length, 2400), query.length) / 4);
+  recordUsage(appConfig.retrieval.rerankModel, data.usage?.prompt_tokens ?? data.usage?.total_tokens ?? estTokens, 0);
   return data.results
     .slice(0, appConfig.retrieval.topK)
     .map((r) => {

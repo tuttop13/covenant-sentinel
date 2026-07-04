@@ -1,14 +1,14 @@
 import { appConfig } from '@/config/app.config';
-import { completeJson } from '@/lib/llm/client';
+import { RunUsageTracker, completeJson, setActiveTracker } from '@/lib/llm/client';
 import { getDocument } from '@/lib/data/corpus';
 import { toolByName } from '@/lib/tools';
 import { queryLedger } from '@/lib/tools/queryLedger';
 import { computeConfidence } from './confidence';
 import {
-  DRAFTER_SYSTEM, INVESTIGATOR_SYSTEM, PLAN_SYSTEM, SKEPTIC_SYSTEM,
+  DRAFTER_SYSTEM, INVESTIGATOR_SYSTEM, PLAN_SYSTEM, SKEPTIC_SYSTEM, TRIAGE_SYSTEM,
   investigateInstruction,
 } from './prompts';
-import type { AgentEventType, Memo, Objection, SkepticVerdict } from '@/lib/types';
+import type { AgentEventType, Memo, Objection, SkepticVerdict, TriageResult } from '@/lib/types';
 
 export type Emit = (type: AgentEventType, title: string, detail?: string, payload?: unknown) => void;
 
@@ -30,13 +30,13 @@ const clip = (s: string, n: number) => (s.length > n ? s.slice(0, n) + ` …[tru
  * movements from the memo. Any such ledger row missing from flaggedTransactions
  * is force-added as unexplained — and honestly lowers the confidence score.
  */
-function materialitySweep(memo: Memo, emit: Emit): void {
+function materialitySweep(memo: Memo, window: { from: string; to: string }, emit: Emit): void {
   const m = appConfig.materiality;
   const oneOff = new Set<string>(m.oneOffCategories);
   const material = queryLedger({
     minAbsAmountEur: m.thresholdEur,
-    dateFrom: m.window.from,
-    dateTo: m.window.to,
+    dateFrom: window.from,
+    dateTo: window.to,
     limit: 25,
   }).rows.filter((r) => oneOff.has(r.category));
 
@@ -74,6 +74,11 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
     emit('error', `Unknown document ${arrivalDocId}`);
     return;
   }
+  const scenario = appConfig.demo.scenarios.find((s) => s.docId === arrivalDocId);
+
+  // Per-run token/cost accounting (priced with the Vultr public price list)
+  const tracker = new RunUsageTracker();
+  setActiveTracker(tracker);
 
   // Evidence tracked deterministically for the confidence score
   let usedCalcRatio = false;
@@ -89,6 +94,24 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
     `NEW DOCUMENT ARRIVAL\n` +
     `Document: ${doc.title} (id: ${doc.id}, type: ${doc.type}, dated ${doc.date})\n\n` +
     doc.pages.map((p) => `--- page ${p.n}: ${clip(p.bodyText, 1600)}`).join('\n');
+
+  // ---------- Phase 0: TRIAGE (cheapest model gates the expensive ones) ----------
+  emit('phase', 'Triage', 'Nemotron Nano classifies the arrival before waking the full agent');
+  try {
+    const triage = await completeJson<TriageResult>('triage', [
+      { role: 'system', content: TRIAGE_SYSTEM },
+      { role: 'user', content: `Document title: ${doc.title}\nDocument type: ${doc.type}\nDated: ${doc.date}\n\nFirst page:\n${clip(doc.pages[0].bodyText, 1800)}` },
+    ]);
+    emit('triage', `Triage: ${triage.docClass} → ${triage.decision}`, triage.reason, triage);
+    if (triage.decision === 'archive') {
+      emit('done', 'Archived without full investigation — no covenant-relevant content');
+      setActiveTracker(null);
+      return;
+    }
+  } catch (e) {
+    // Triage is an optimization, never a blocker.
+    emit('triage', 'Triage unavailable — investigating by default', e instanceof Error ? e.message : String(e));
+  }
 
   // ---------- Phase 1: PLAN ----------
   emit('phase', 'Planning', 'Sentinel drafts its investigation plan');
@@ -217,8 +240,8 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
     }
   }
 
-  // ---------- Phase 5: Materiality sweep + confidence + final ----------
-  materialitySweep(memo, emit);
+  // ---------- Phase 5: Materiality sweep + confidence + cost + final ----------
+  if (scenario) materialitySweep(memo, scenario.window, emit);
 
   const confidence = computeConfidence({
     usedCalcRatio,
@@ -231,7 +254,15 @@ export async function runAgent(arrivalDocId: string, emit: Emit): Promise<void> 
   emit('confidence', `Confidence ${(confidence.total * 100).toFixed(0)}%`,
     'Deterministic score computed from what the agent actually verified', confidence);
 
+  const usage = tracker.snapshot();
+  if (usage.totalTokens > 0) {
+    emit('cost', `Run cost: $${usage.totalCostUsd.toFixed(4)}`,
+      `${usage.totalCalls} model calls · ${usage.totalTokens.toLocaleString('en-US')} tokens across ${usage.byModel.length} Vultr models`,
+      usage);
+  }
+
   emit('memo_final', `Final memo: ${memo.status}`, memo.title,
-    { memo, confidence, skepticApproved: verdict?.verdict === 'approved' });
+    { memo, confidence, usage, skepticApproved: verdict?.verdict === 'approved' });
   emit('done', 'Run complete');
+  setActiveTracker(null);
 }

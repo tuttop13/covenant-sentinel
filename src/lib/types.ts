@@ -131,11 +131,69 @@ export interface ConfidenceBreakdown {
   total: number;
 }
 
+// ---------- Triage ----------
+
+export interface TriageResult {
+  docClass: string;
+  decision: 'investigate' | 'archive';
+  reason: string;
+}
+
+// ---------- Run usage / cost ----------
+
+export interface ModelUsage {
+  model: string;
+  calls: number;
+  promptTokens: number;
+  completionTokens: number;
+  costUsd: number;
+}
+
+export interface RunUsage {
+  byModel: ModelUsage[];
+  totalCalls: number;
+  totalTokens: number;
+  totalCostUsd: number;
+}
+
+// ---------- Evaluation harness ----------
+
+export interface EvalCheck {
+  id: string;
+  label: string;
+  passed: boolean;
+  detail: string;
+}
+
+export interface ScenarioEval {
+  docId: string;
+  label: string;
+  hasRun: boolean;
+  runAgeMinutes?: number;
+  checks: EvalCheck[];
+  /** 0..1 — fraction of deterministic checks passed */
+  score: number;
+  durationSec?: number;
+  costUsd?: number;
+  totalTokens?: number;
+}
+
+export interface JudgeResult {
+  docId: string;
+  model: string;
+  /** 0..100 */
+  faithfulness: number;
+  /** 0..100 */
+  completeness: number;
+  comments: string[];
+}
+
 // ---------- Agent events (SSE trace) ----------
 
 export type AgentEventType =
   | 'run_started'
   | 'phase'
+  | 'triage'
   | 'thought'
   | 'tool_call'
   | 'tool_result'
@@ -144,6 +202,7 @@ export type AgentEventType =
   | 'skeptic_verdict'
   | 'resolution_note'
   | 'confidence'
+  | 'cost'
   | 'memo_final'
   | 'error'
   | 'done';

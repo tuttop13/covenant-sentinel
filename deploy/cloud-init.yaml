@@ -1,0 +1,42 @@
+#cloud-config
+# Covenant Sentinel — Vultr instance bootstrap (Ubuntu 24.04).
+# Injected as user_data by deploy/vultr-deploy.sh, which substitutes __INFERENCE_KEY__.
+
+package_update: true
+packages:
+  - git
+  - curl
+
+write_files:
+  - path: /etc/systemd/system/covenant-sentinel.service
+    content: |
+      [Unit]
+      Description=Covenant Sentinel (Next.js)
+      After=network-online.target
+      Wants=network-online.target
+
+      [Service]
+      WorkingDirectory=/opt/covenant-sentinel
+      Environment=NODE_ENV=production
+      Environment=PORT=80
+      ExecStart=/usr/bin/node .next/standalone/server.js
+      Restart=always
+      RestartSec=3
+
+      [Install]
+      WantedBy=multi-user.target
+
+runcmd:
+  - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+  - apt-get install -y nodejs
+  - git clone https://github.com/tuttop13/covenant-sentinel.git /opt/covenant-sentinel
+  - echo "VULTR_INFERENCE_API_KEY=__INFERENCE_KEY__" > /opt/covenant-sentinel/.env.local
+  - cd /opt/covenant-sentinel && npm ci && npm run build
+  # standalone bundle expects static assets and data next to server.js
+  - cp -r /opt/covenant-sentinel/.next/static /opt/covenant-sentinel/.next/standalone/.next/static
+  - cp -r /opt/covenant-sentinel/data /opt/covenant-sentinel/.next/standalone/data
+  - cp /opt/covenant-sentinel/.env.local /opt/covenant-sentinel/.next/standalone/.env.local
+  - sed -i 's|WorkingDirectory=/opt/covenant-sentinel|WorkingDirectory=/opt/covenant-sentinel/.next/standalone|' /etc/systemd/system/covenant-sentinel.service
+  - sed -i 's|ExecStart=/usr/bin/node .next/standalone/server.js|ExecStart=/usr/bin/node server.js|' /etc/systemd/system/covenant-sentinel.service
+  - systemctl daemon-reload
+  - systemctl enable --now covenant-sentinel

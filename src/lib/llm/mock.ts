@@ -100,6 +100,13 @@ export function mockComplete(tag: string, messages: LLMMessage[]): string {
   const resolving = prompt.includes('OUTSTANDING OBJECTIONS');
 
   switch (tag) {
+    case 'triage':
+      return j({
+        docClass: 'quarterly filing',
+        decision: 'investigate',
+        reason: 'Quarterly financial statements directly feed the Section 7.1 covenant tests — full investigation warranted.',
+      });
+
     case 'plan':
       return j({
         goal: 'Assess Q3-2025 covenant compliance for Meridian Logistics SA following arrival of the quarterly filing, identify causes of any deterioration, and produce an escalation-grade memo with citations.',

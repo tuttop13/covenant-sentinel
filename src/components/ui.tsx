@@ -4,9 +4,9 @@ export const fmtEur = (n: number) =>
   (n < 0 ? '−' : '+') + '€' + Math.abs(n).toLocaleString('en-US');
 
 export const STATUS_STYLE: Record<MemoStatus, string> = {
-  OK: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/40',
-  EARLY_WARNING: 'bg-amber-500/15 text-amber-300 border-amber-500/40',
-  BREACH: 'bg-red-500/15 text-red-300 border-red-500/40',
+  OK: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  EARLY_WARNING: 'bg-amber-50 text-amber-800 border-amber-200',
+  BREACH: 'bg-red-50 text-red-700 border-red-200',
 };
 
 export function StatusChip({ status }: { status: MemoStatus }) {
@@ -19,8 +19,8 @@ export function StatusChip({ status }: { status: MemoStatus }) {
 
 export function PanelTitle({ children, right }: { children: React.ReactNode; right?: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-between border-b border-slate-800 px-4 py-2.5">
-      <h2 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">{children}</h2>
+    <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-300 bg-slate-100 px-4 py-2.5">
+      <h2 className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">{children}</h2>
       {right}
     </div>
   );

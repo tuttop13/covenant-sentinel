@@ -31,14 +31,20 @@ const pick = <T,>(arr: T[]): T => arr[Math.floor(rng() * arr.length)];
 const between = (min: number, max: number) => min + rng() * (max - min);
 
 // ---------- Financial story (all figures in EUR thousands) ----------
-// Q3-2025: EBITDA hit by a €1.2M one-off legal settlement + €1.0M operating dip;
-// net debt up via a €2.8M revolver-funded equipment purchase and lower cash.
-// LTM leverage: 3.13x (Q2) -> 3.70x (Q3). Original covenant: ≤ 3.50x.
-// Amendment No. 2 (easy to miss): holiday at 4.00x for Q3/Q4-2025, reverts Q1-2026.
+// Three alternative "what arrives next" scenarios, one per quarter:
+//   Q2-2025 (routine)    — leverage 3.13x, everything compliant → OK memo.
+//   Q3-2025 (the twist)  — EBITDA hit by a €1.2M one-off legal settlement + operating
+//                          dip; €2.8M revolver-funded capex. Leverage 3.70x vs original
+//                          3.50x — but Amendment No. 2 (easy to miss) grants a holiday
+//                          at 4.00x for Q3/Q4-2025 → EARLY_WARNING, not breach.
+//   Q4-2025 (distressed) — EBITDA slides further, €3.0M more revolver, cash €2.6M.
+//                          Leverage 4.41x exceeds EVEN the amended 4.00x ceiling AND
+//                          cash breaches the €3.0M minimum liquidity condition → BREACH.
 
 const quarterlyEbitda: Record<string, number> = {
   'Q4-2023': 5900, 'Q1-2024': 5600, 'Q2-2024': 6100, 'Q3-2024': 6300,
   'Q4-2024': 6000, 'Q1-2025': 5800, 'Q2-2025': 6200, 'Q3-2025': 4000,
+  'Q4-2025': 3400,
 };
 
 const quarters = Object.keys(quarterlyEbitda);
@@ -46,12 +52,17 @@ const quarters = Object.keys(quarterlyEbitda);
 const grossDebt: Record<string, number> = {
   'Q4-2023': 84000, 'Q1-2024': 83500, 'Q2-2024': 83000, 'Q3-2024': 82800,
   'Q4-2024': 82500, 'Q1-2025': 82300, 'Q2-2025': 82000, 'Q3-2025': 85200,
+  'Q4-2025': 88200,
 };
 
 const cash: Record<string, number> = {
   'Q4-2023': 5200, 'Q1-2024': 5400, 'Q2-2024': 5600, 'Q3-2024': 5800,
   'Q4-2024': 6100, 'Q1-2025': 5900, 'Q2-2025': 6000, 'Q3-2025': 3800,
+  'Q4-2025': 2600,
 };
+
+/** Quarters that arrive via the inbox as scenarios (not pre-indexed statements). */
+const ARRIVAL_QUARTERS = ['Q2-2025', 'Q3-2025', 'Q4-2025'];
 
 function ltm(map: Record<string, number>, quarter: string): number {
   const idx = quarters.indexOf(quarter);
@@ -207,7 +218,7 @@ function quarterEndDate(q: string): string {
 }
 
 const statementDocs: CorpusDocument[] = financials
-  .filter((f) => f.quarter !== 'Q3-2025')
+  .filter((f) => !ARRIVAL_QUARTERS.includes(f.quarter))
   .map((f) => {
     const pl = financialTable([
       ['Revenue', f.revenueK],
@@ -237,7 +248,7 @@ const statementDocs: CorpusDocument[] = financials
     };
   });
 
-// ---------- Compliance certificates (Q1/Q2-2025 precedent) ----------
+// ---------- Compliance certificates (Q4-2024/Q1-2025 precedent) ----------
 
 function certificate(q: string, leverage: string, dscr: string): CorpusDocument {
   return {
@@ -256,45 +267,60 @@ function certificate(q: string, leverage: string, dscr: string): CorpusDocument 
   };
 }
 
-const certQ1 = certificate('Q1-2025', '3.21:1.00', '2.62:1.00');
-const certQ2 = certificate('Q2-2025', '3.13:1.00', '2.64:1.00');
+const certQ4 = certificate('Q4-2024', '3.18:1.00', '2.79:1.00');
+const certQ1 = certificate('Q1-2025', '3.16:1.00', '2.81:1.00');
 
-// ---------- The Q3-2025 filing (arrives via inbox — wakes the agent) ----------
+// ---------- Arrival filings (inbox scenarios — each wakes the agent) ----------
 
-const q3 = financials.find((f) => f.quarter === 'Q3-2025')!;
-const q3pl = financialTable([
-  ['Revenue', q3.revenueK],
-  ['Operating expenses (incl. exceptional items)', -(q3.revenueK - q3.ebitdaK)],
-  ['EBITDA', q3.ebitdaK],
-  ['Depreciation and amortisation', -q3.depreciationK],
-  ['Net interest expense', -q3.interestExpenseK],
-  ['Net income', q3.netIncomeK],
+function arrivalFiling(quarter: string, filedDate: string, commentary: string[]): CorpusDocument {
+  const f = financials.find((x) => x.quarter === quarter)!;
+  const pl = financialTable([
+    ['Revenue', f.revenueK],
+    ['Operating expenses (incl. exceptional items)', -(f.revenueK - f.ebitdaK)],
+    ['EBITDA', f.ebitdaK],
+    ['Depreciation and amortisation', -f.depreciationK],
+    ['Net interest expense', -f.interestExpenseK],
+    ['Net income', f.netIncomeK],
+  ]);
+  const bs = financialTable([
+    ['Cash and cash equivalents', f.cashK],
+    ['Total borrowings (incl. revolver drawings)', f.grossDebtK],
+    ['Total net debt', f.netDebtK],
+    ['LTM EBITDA (last twelve months)', f.ltmEbitdaK],
+    ['LTM interest paid', f.ltmInterestK],
+    ['LTM scheduled principal repayments', f.ltmScheduledAmortK],
+  ]);
+  return {
+    id: `${quarter.toLowerCase()}-filing`,
+    title: `${quarter} Quarterly Filing — Meridian Logistics SA`,
+    type: 'filing',
+    date: filedDate,
+    arrivesViaInbox: true,
+    pages: [
+      page(1, `${quarter} MANAGEMENT COMMENTARY`, p(...commentary)),
+      page(2, `${quarter} CONSOLIDATED INCOME STATEMENT`, { bodyText: pl.text, bodyHtml: pl.html }),
+      page(3, `${quarter} BALANCE SHEET EXTRACT AND DEBT SCHEDULE`, { bodyText: bs.text, bodyHtml: bs.html }),
+    ],
+  };
+}
+
+const q2Filing = arrivalFiling('Q2-2025', '2025-08-08', [
+  'The second quarter of 2025 delivered stable operating performance. Revenue benefited from sustained volumes on the Iberian corridor and the renewal of the Carrefour Supply distribution contract on improved terms.',
+  'No exceptional items were recognised during the quarter. Net debt decreased marginally as operating cash generation covered scheduled debt service, with quarter-end liquidity of EUR 6,000 thousand.',
+  'Management confirms the fleet electrification programme announced in June 2025 remains on schedule, with the first capital deployments expected in the second half of 2025.',
 ]);
-const q3bs = financialTable([
-  ['Cash and cash equivalents', q3.cashK],
-  ['Total borrowings (incl. revolver drawings)', q3.grossDebtK],
-  ['Total net debt', q3.netDebtK],
-  ['LTM EBITDA (last twelve months)', q3.ltmEbitdaK],
-  ['LTM interest paid', q3.ltmInterestK],
-  ['LTM scheduled principal repayments', q3.ltmScheduledAmortK],
+
+const q3Filing = arrivalFiling('Q3-2025', '2025-11-10', [
+  'The third quarter of 2025 was marked by two exceptional developments. First, the Group recognised a EUR 1,200 thousand charge in operating expenses in connection with the final settlement of the Aurora Freight SARL litigation (payment reference LEGAL-SETTLE-0847, August 2025). Second, the Group accelerated its fleet electrification programme with the purchase of twelve electric trucks and associated charging infrastructure from Nordvolt Fleet Systems for EUR 2,800 thousand (reference EQUIP-PURCH-0912), funded through a drawing under the Revolving Facility in September 2025.',
+  'Operating performance was further affected by elevated fuel costs and the non-renewal of a regional distribution contract, together reducing EBITDA by approximately EUR 800 thousand relative to the prior quarter.',
+  'Management notes that quarter-end liquidity decreased to EUR 3,800 thousand, and expects gradual recovery of operating margins in Q4-2025.',
 ]);
 
-const q3Filing: CorpusDocument = {
-  id: 'q3-2025-filing',
-  title: 'Q3-2025 Quarterly Filing — Meridian Logistics SA',
-  type: 'filing',
-  date: '2025-11-10',
-  arrivesViaInbox: true,
-  pages: [
-    page(1, 'Q3-2025 MANAGEMENT COMMENTARY', p(
-      'The third quarter of 2025 was marked by two exceptional developments. First, the Group recognised a EUR 1,200 thousand charge in operating expenses in connection with the final settlement of the Aurora Freight SARL litigation (payment reference LEGAL-SETTLE-0847, August 2025). Second, the Group accelerated its fleet electrification programme with the purchase of twelve electric trucks and associated charging infrastructure from Nordvolt Fleet Systems for EUR 2,800 thousand (reference EQUIP-PURCH-0912), funded through a drawing under the Revolving Facility in September 2025.',
-      'Operating performance was further affected by elevated fuel costs and the non-renewal of a regional distribution contract, together reducing EBITDA by approximately EUR 800 thousand relative to the prior quarter.',
-      'Management notes that quarter-end liquidity decreased to EUR 3,800 thousand, and expects gradual recovery of operating margins in Q4-2025.'
-    )),
-    page(2, 'Q3-2025 CONSOLIDATED INCOME STATEMENT', { bodyText: q3pl.text, bodyHtml: q3pl.html }),
-    page(3, 'Q3-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE', { bodyText: q3bs.text, bodyHtml: q3bs.html }),
-  ],
-};
+const q4Filing = arrivalFiling('Q4-2025', '2026-02-09', [
+  'The fourth quarter of 2025 was severely affected by the insolvency of Baltika Retail Group, the Group\'s fourth-largest customer, resulting in a EUR 1,450 thousand write-off of trade receivables (reference WRITEOFF-1107, November 2025) and the loss of associated contracted volumes.',
+  'The Group drew a further EUR 3,000 thousand under the Revolving Facility in October 2025 (reference REVOLVER-DRAW-1002) to fund the second phase of the fleet electrification programme — warehouse charging retrofit at the Lyon hub for EUR 1,600 thousand (reference EQUIP-PURCH-1015) — and general working capital. Restructuring advisory fees of EUR 320 thousand were incurred in November (reference ADVISORY-1119).',
+  'Quarter-end liquidity stood at EUR 2,600 thousand. Management is in discussions with its relationship banks regarding options to strengthen the liquidity position.',
+]);
 
 // ---------- Ledger (Q3-2025 operating account) ----------
 
@@ -306,44 +332,58 @@ function addRow(date: string, account: string, counterparty: string, description
   ledger.push({ id: id ?? rid('TXN'), date, account, counterparty, description, category, amountEur: Math.round(amountEur) });
 }
 
+// The ledger spans April–December 2025 so every scenario window has data to hunt in.
 const days: string[] = [];
-for (let m = 7; m <= 9; m++) {
-  const dim = m === 7 ? 31 : m === 8 ? 31 : 30;
+for (let m = 4; m <= 12; m++) {
+  const dim = [4, 6, 9, 11].includes(m) ? 30 : 31;
   for (let d = 1; d <= dim; d++) days.push(`2025-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`);
 }
 const businessDays = days.filter((d) => ![0, 6].includes(new Date(d).getDay()));
+const lastDay = (m: number) => `2025-${String(m).padStart(2, '0')}-${[4, 6, 9, 11].includes(m) ? 30 : 31}`;
 
-// Recurring flows
-for (const d of ['2025-07-15', '2025-07-31', '2025-08-14', '2025-08-29', '2025-09-15', '2025-09-30'])
-  addRow(d, 'OPS-MAIN', 'Payroll run', 'Payroll and social charges', 'payroll', -between(780_000, 840_000));
-for (const d of ['2025-07-01', '2025-08-01', '2025-09-01']) {
-  addRow(d, 'OPS-MAIN', 'Atlas Real Estate', 'Depot lease — Gennevilliers hub', 'lease', -186_000);
-  addRow(d, 'OPS-MAIN', 'AXA Corporate', 'Fleet insurance premium', 'insurance', -94_500);
-  addRow(d, 'OPS-MAIN', 'Iberia Linehaul SL', 'Subcontracted linehaul — monthly settlement', 'subcontracting', -between(275_000, 305_000));
+// Recurring flows (every month)
+for (let m = 4; m <= 12; m++) {
+  const mm = String(m).padStart(2, '0');
+  addRow(`2025-${mm}-15`, 'OPS-MAIN', 'Payroll run', 'Payroll and social charges', 'payroll', -between(780_000, 840_000));
+  addRow(lastDay(m), 'OPS-MAIN', 'Payroll run', 'Payroll and social charges', 'payroll', -between(780_000, 840_000));
+  addRow(`2025-${mm}-01`, 'OPS-MAIN', 'Atlas Real Estate', 'Depot lease — Gennevilliers hub', 'lease', -186_000);
+  addRow(`2025-${mm}-01`, 'OPS-MAIN', 'AXA Corporate', 'Fleet insurance premium', 'insurance', -94_500);
+  addRow(`2025-${mm}-01`, 'OPS-MAIN', 'Iberia Linehaul SL', 'Subcontracted linehaul — monthly settlement', 'subcontracting', -between(275_000, 305_000));
 }
 businessDays.filter((_, i) => i % 5 === 0).forEach((d) => {
   addRow(d, 'OPS-MAIN', 'TotalEnergies Fleet', 'Fuel card settlement', 'fuel', -between(95_000, 145_000));
   addRow(d, 'OPS-MAIN', 'ASFA Péage', 'Highway tolls settlement', 'tolls', -between(22_000, 38_000));
 });
 
-// Story rows (the causes + the funding leg + two deliberately unexplained items)
+// Quarterly interest payments — Facility A
+addRow('2025-06-12', 'OPS-MAIN', 'Volta Bank AG', 'Quarterly interest payment — Facility A', 'interest', -1_137_500, 'INT-PAY-0630');
+addRow('2025-09-12', 'OPS-MAIN', 'Volta Bank AG', 'Quarterly interest payment — Facility A', 'interest', -1_137_500, 'INT-PAY-0930');
+addRow('2025-12-12', 'OPS-MAIN', 'Volta Bank AG', 'Quarterly interest payment — Facility A', 'interest', -1_137_500, 'INT-PAY-1231');
+
+// Q3-2025 story rows (the causes + the funding leg + two deliberately unexplained items)
 addRow('2025-08-14', 'OPS-MAIN', 'Aurora Freight SARL', 'Settlement — Aurora Freight SARL litigation (final)', 'legal', -1_200_000, 'LEGAL-SETTLE-0847');
 addRow('2025-09-05', 'OPS-MAIN', 'Nordvolt Fleet Systems', 'Purchase — 12 electric trucks + charging infrastructure', 'capex', -2_800_000, 'EQUIP-PURCH-0912');
 addRow('2025-09-03', 'OPS-MAIN', 'Volta Bank AG', 'Revolving facility drawdown', 'financing', 2_800_000, 'REVOLVER-DRAW-0901');
 addRow('2025-07-28', 'OPS-MAIN', 'Meridian Iberia SL', 'Intercompany adjustment — Meridian Iberia', 'intercompany', -410_000, 'MISC-ADJ-0203');
 addRow('2025-09-19', 'OPS-MAIN', 'Treasury desk', 'FX revaluation adjustment — USD exposures', 'treasury', -275_000, 'FX-REVAL-0331');
-addRow('2025-09-12', 'OPS-MAIN', 'Volta Bank AG', 'Quarterly interest payment — Facility A', 'interest', -1_137_500, 'INT-PAY-0930');
+
+// Q4-2025 story rows (the distressed quarter — real breach)
+addRow('2025-10-02', 'OPS-MAIN', 'Volta Bank AG', 'Revolving facility drawdown', 'financing', 3_000_000, 'REVOLVER-DRAW-1002');
+addRow('2025-10-15', 'OPS-MAIN', 'Nordvolt Fleet Systems', 'Warehouse charging retrofit — Lyon hub (phase 2)', 'capex', -1_600_000, 'EQUIP-PURCH-1015');
+addRow('2025-11-07', 'OPS-MAIN', 'Baltika Retail Group', 'Write-off — trade receivables — Baltika Retail Group insolvency', 'writeoff', -1_450_000, 'WRITEOFF-1107');
+addRow('2025-11-19', 'OPS-MAIN', 'Alvarez Advisory', 'Restructuring advisory fees — liquidity options review', 'advisory', -320_000, 'ADVISORY-1119');
+addRow('2025-12-04', 'OPS-MAIN', 'Treasury desk', 'FX revaluation adjustment — USD exposures', 'treasury', -240_000, 'FX-REVAL-1204');
 
 // Noise: revenue receipts, supplier payments, maintenance
 const clients = ['Carrefour Supply', 'Decathlon Logistics', 'Sanofi Distribution', 'Leroy Merlin Flux', 'FNAC-Darty Chain', 'Auchan Retail', 'PSA Aftermarket'];
 const suppliers = ['Michelin Solutions', 'MAN Truck Service', 'Bridgestone Fleet', 'Norauto Pro', 'Manutan Collectivités', 'Rexel Équipement', 'Würth France'];
-for (let i = 0; i < 250; i++)
+for (let i = 0; i < 700; i++)
   addRow(pick(businessDays), 'OPS-MAIN', pick(clients), 'Client receipt — freight and logistics services', 'revenue', between(18_000, 220_000));
-for (let i = 0; i < 130; i++)
+for (let i = 0; i < 360; i++)
   addRow(pick(businessDays), 'OPS-MAIN', pick(suppliers), 'Supplier payment — parts and services', 'suppliers', -between(4_000, 90_000));
-for (let i = 0; i < 45; i++)
+for (let i = 0; i < 120; i++)
   addRow(pick(businessDays), 'OPS-MAIN', pick(suppliers), 'Fleet maintenance and repairs', 'maintenance', -between(6_000, 55_000));
-for (let i = 0; i < 30; i++)
+for (let i = 0; i < 90; i++)
   addRow(pick(businessDays), 'OPS-MAIN', 'Various', 'Sundry administrative expenses', 'admin', -between(1_500, 18_000));
 
 ledger.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
@@ -352,7 +392,8 @@ ledger.sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
 
 const corpus: CorpusDocument[] = [
   creditAgreement, amendment1, amendment2,
-  ...statementDocs, certQ1, certQ2, q3Filing,
+  ...statementDocs, certQ4, certQ1,
+  q2Filing, q3Filing, q4Filing,
 ];
 
 mkdirSync(DATA_DIR, { recursive: true });
@@ -366,8 +407,12 @@ const csvBody = ledger
   .join('\n');
 writeFileSync(join(DATA_DIR, 'ledger.csv'), `${csvHeader}\n${csvBody}\n`);
 
-const q3f = financials.find((f) => f.quarter === 'Q3-2025')!;
 console.log(`corpus.json      ${corpus.length} documents, ${corpus.reduce((s, d) => s + d.pages.length, 0)} pages`);
 console.log(`ledger.csv       ${ledger.length} transactions`);
 console.log(`financials.json  ${financials.length} quarters`);
-console.log(`Q3-2025 check    net debt ${q3f.netDebtK}K / LTM EBITDA ${q3f.ltmEbitdaK}K = ${(q3f.netDebtK / q3f.ltmEbitdaK).toFixed(2)}x (original covenant 3.50x, holiday 4.00x)`);
+for (const q of ARRIVAL_QUARTERS) {
+  const f = financials.find((x) => x.quarter === q)!;
+  const lev = f.netDebtK / f.ltmEbitdaK;
+  const dscr = f.ltmEbitdaK / (f.ltmInterestK + f.ltmScheduledAmortK);
+  console.log(`${q} check    leverage ${lev.toFixed(2)}x · dscr ${dscr.toFixed(2)}x · cash ${f.cashK}K (original 3.50x; holiday 4.00x for Q3/Q4-2025; min liquidity 3,000K)`);
+}

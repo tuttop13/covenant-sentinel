@@ -110,5 +110,19 @@
     "ltmEbitdaK": 22000,
     "ltmInterestK": 4600,
     "ltmScheduledAmortK": 4000
+  },
+  {
+    "quarter": "Q4-2025",
+    "revenueK": 27200,
+    "ebitdaK": 3400,
+    "depreciationK": 2100,
+    "interestExpenseK": 1150,
+    "netIncomeK": 108,
+    "cashK": 2600,
+    "grossDebtK": 88200,
+    "netDebtK": 85600,
+    "ltmEbitdaK": 19400,
+    "ltmInterestK": 4600,
+    "ltmScheduledAmortK": 4000
   }
 ]

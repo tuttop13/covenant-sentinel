@@ -234,22 +234,16 @@
     ]
   },
   {
-    "id": "fin-q2-2025",
-    "title": "Quarterly Financial Statements Q2-2025",
-    "type": "financials",
-    "date": "2025-06-30",
+    "id": "cert-q4-2024",
+    "title": "Compliance Certificate Q4-2024",
+    "type": "certificate",
+    "date": "2024-12-31",
     "pages": [
       {
         "n": 1,
-        "heading": "Q2-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA",
-        "bodyText": "Q2-2025 CONSOLIDATED INCOME STATEMENT — MERIDIAN LOGISTICS SA\n\nRevenue: EUR 49,600 thousand\nOperating expenses: EUR (43,400) thousand\nEBITDA: EUR 6,200 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 2,124 thousand",
-        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">49,600</td></tr><tr><td>Operating expenses</td><td class=\"num\">(43,400)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,200</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">2,124</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
-      },
-      {
-        "n": 2,
-        "heading": "Q2-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
-        "bodyText": "Q2-2025 CONSOLIDATED BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 6,000 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,000 thousand\nTotal net debt: EUR 76,000 thousand\nLTM EBITDA (last twelve months): EUR 24,300 thousand",
-        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">6,000</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,000</td></tr><tr><td>Total net debt</td><td class=\"num\">76,000</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">24,300</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+        "heading": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2024-12-31",
+        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2024-12-31\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2024-12-31.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.18:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.79:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
+        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2024-12-31.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.18:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.79:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
       }
     ]
   },
@@ -262,22 +256,35 @@
       {
         "n": 1,
         "heading": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-03-31",
-        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-03-31\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.21:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.62:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
-        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.21:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.62:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
+        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-03-31\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.16:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.81:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
+        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-03-31.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.16:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.81:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
       }
     ]
   },
   {
-    "id": "cert-q2-2025",
-    "title": "Compliance Certificate Q2-2025",
-    "type": "certificate",
-    "date": "2025-06-30",
+    "id": "q2-2025-filing",
+    "title": "Q2-2025 Quarterly Filing — Meridian Logistics SA",
+    "type": "filing",
+    "date": "2025-08-08",
+    "arrivesViaInbox": true,
     "pages": [
       {
         "n": 1,
-        "heading": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-06-30",
-        "bodyText": "COMPLIANCE CERTIFICATE — MEASUREMENT PERIOD ENDING 2025-06-30\n\nPursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-06-30.\n\nLeverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.13:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.\n\nDebt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.64:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.\n\nNo Default or Event of Default has occurred and is continuing as at the date of this certificate.",
-        "bodyHtml": "<p>Pursuant to Section 5(c) of the Senior Facilities Agreement dated 15 March 2023, the undersigned CFO of Meridian Logistics SA certifies the following computations for the Measurement Period ending 2025-06-30.</p>\n<p>Leverage Ratio (Section 7.1(a)): Total Net Debt divided by Consolidated EBITDA (LTM) = 3.13:1.00. Requirement: not more than 3.50:1.00. Status: COMPLIANT.</p>\n<p>Debt Service Coverage (Section 7.1(b)): Consolidated EBITDA (LTM) divided by Debt Service = 2.64:1.00. Requirement: not less than 1.25:1.00. Status: COMPLIANT.</p>\n<p>No Default or Event of Default has occurred and is continuing as at the date of this certificate.</p>"
+        "heading": "Q2-2025 MANAGEMENT COMMENTARY",
+        "bodyText": "Q2-2025 MANAGEMENT COMMENTARY\n\nThe second quarter of 2025 delivered stable operating performance. Revenue benefited from sustained volumes on the Iberian corridor and the renewal of the Carrefour Supply distribution contract on improved terms.\n\nNo exceptional items were recognised during the quarter. Net debt decreased marginally as operating cash generation covered scheduled debt service, with quarter-end liquidity of EUR 6,000 thousand.\n\nManagement confirms the fleet electrification programme announced in June 2025 remains on schedule, with the first capital deployments expected in the second half of 2025.",
+        "bodyHtml": "<p>The second quarter of 2025 delivered stable operating performance. Revenue benefited from sustained volumes on the Iberian corridor and the renewal of the Carrefour Supply distribution contract on improved terms.</p>\n<p>No exceptional items were recognised during the quarter. Net debt decreased marginally as operating cash generation covered scheduled debt service, with quarter-end liquidity of EUR 6,000 thousand.</p>\n<p>Management confirms the fleet electrification programme announced in June 2025 remains on schedule, with the first capital deployments expected in the second half of 2025.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q2-2025 CONSOLIDATED INCOME STATEMENT",
+        "bodyText": "Q2-2025 CONSOLIDATED INCOME STATEMENT\n\nRevenue: EUR 49,600 thousand\nOperating expenses (incl. exceptional items): EUR (43,400) thousand\nEBITDA: EUR 6,200 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 2,124 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">49,600</td></tr><tr><td>Operating expenses (incl. exceptional items)</td><td class=\"num\">(43,400)</td></tr><tr><td>EBITDA</td><td class=\"num\">6,200</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">2,124</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 3,
+        "heading": "Q2-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q2-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 6,000 thousand\nTotal borrowings (incl. revolver drawings): EUR 82,000 thousand\nTotal net debt: EUR 76,000 thousand\nLTM EBITDA (last twelve months): EUR 24,300 thousand\nLTM interest paid: EUR 4,600 thousand\nLTM scheduled principal repayments: EUR 4,000 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">6,000</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">82,000</td></tr><tr><td>Total net debt</td><td class=\"num\">76,000</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">24,300</td></tr><tr><td>LTM interest paid</td><td class=\"num\">4,600</td></tr><tr><td>LTM scheduled principal repayments</td><td class=\"num\">4,000</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
       }
     ]
   },
@@ -305,6 +312,33 @@
         "heading": "Q3-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
         "bodyText": "Q3-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 3,800 thousand\nTotal borrowings (incl. revolver drawings): EUR 85,200 thousand\nTotal net debt: EUR 81,400 thousand\nLTM EBITDA (last twelve months): EUR 22,000 thousand\nLTM interest paid: EUR 4,600 thousand\nLTM scheduled principal repayments: EUR 4,000 thousand",
         "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">3,800</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">85,200</td></tr><tr><td>Total net debt</td><td class=\"num\">81,400</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">22,000</td></tr><tr><td>LTM interest paid</td><td class=\"num\">4,600</td></tr><tr><td>LTM scheduled principal repayments</td><td class=\"num\">4,000</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      }
+    ]
+  },
+  {
+    "id": "q4-2025-filing",
+    "title": "Q4-2025 Quarterly Filing — Meridian Logistics SA",
+    "type": "filing",
+    "date": "2026-02-09",
+    "arrivesViaInbox": true,
+    "pages": [
+      {
+        "n": 1,
+        "heading": "Q4-2025 MANAGEMENT COMMENTARY",
+        "bodyText": "Q4-2025 MANAGEMENT COMMENTARY\n\nThe fourth quarter of 2025 was severely affected by the insolvency of Baltika Retail Group, the Group's fourth-largest customer, resulting in a EUR 1,450 thousand write-off of trade receivables (reference WRITEOFF-1107, November 2025) and the loss of associated contracted volumes.\n\nThe Group drew a further EUR 3,000 thousand under the Revolving Facility in October 2025 (reference REVOLVER-DRAW-1002) to fund the second phase of the fleet electrification programme — warehouse charging retrofit at the Lyon hub for EUR 1,600 thousand (reference EQUIP-PURCH-1015) — and general working capital. Restructuring advisory fees of EUR 320 thousand were incurred in November (reference ADVISORY-1119).\n\nQuarter-end liquidity stood at EUR 2,600 thousand. Management is in discussions with its relationship banks regarding options to strengthen the liquidity position.",
+        "bodyHtml": "<p>The fourth quarter of 2025 was severely affected by the insolvency of Baltika Retail Group, the Group's fourth-largest customer, resulting in a EUR 1,450 thousand write-off of trade receivables (reference WRITEOFF-1107, November 2025) and the loss of associated contracted volumes.</p>\n<p>The Group drew a further EUR 3,000 thousand under the Revolving Facility in October 2025 (reference REVOLVER-DRAW-1002) to fund the second phase of the fleet electrification programme — warehouse charging retrofit at the Lyon hub for EUR 1,600 thousand (reference EQUIP-PURCH-1015) — and general working capital. Restructuring advisory fees of EUR 320 thousand were incurred in November (reference ADVISORY-1119).</p>\n<p>Quarter-end liquidity stood at EUR 2,600 thousand. Management is in discussions with its relationship banks regarding options to strengthen the liquidity position.</p>"
+      },
+      {
+        "n": 2,
+        "heading": "Q4-2025 CONSOLIDATED INCOME STATEMENT",
+        "bodyText": "Q4-2025 CONSOLIDATED INCOME STATEMENT\n\nRevenue: EUR 27,200 thousand\nOperating expenses (incl. exceptional items): EUR (23,800) thousand\nEBITDA: EUR 3,400 thousand\nDepreciation and amortisation: EUR (2,100) thousand\nNet interest expense: EUR (1,150) thousand\nNet income: EUR 108 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Revenue</td><td class=\"num\">27,200</td></tr><tr><td>Operating expenses (incl. exceptional items)</td><td class=\"num\">(23,800)</td></tr><tr><td>EBITDA</td><td class=\"num\">3,400</td></tr><tr><td>Depreciation and amortisation</td><td class=\"num\">(2,100)</td></tr><tr><td>Net interest expense</td><td class=\"num\">(1,150)</td></tr><tr><td>Net income</td><td class=\"num\">108</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
+      },
+      {
+        "n": 3,
+        "heading": "Q4-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE",
+        "bodyText": "Q4-2025 BALANCE SHEET EXTRACT AND DEBT SCHEDULE\n\nCash and cash equivalents: EUR 2,600 thousand\nTotal borrowings (incl. revolver drawings): EUR 88,200 thousand\nTotal net debt: EUR 85,600 thousand\nLTM EBITDA (last twelve months): EUR 19,400 thousand\nLTM interest paid: EUR 4,600 thousand\nLTM scheduled principal repayments: EUR 4,000 thousand",
+        "bodyHtml": "<table><tbody><tr><td>Cash and cash equivalents</td><td class=\"num\">2,600</td></tr><tr><td>Total borrowings (incl. revolver drawings)</td><td class=\"num\">88,200</td></tr><tr><td>Total net debt</td><td class=\"num\">85,600</td></tr><tr><td>LTM EBITDA (last twelve months)</td><td class=\"num\">19,400</td></tr><tr><td>LTM interest paid</td><td class=\"num\">4,600</td></tr><tr><td>LTM scheduled principal repayments</td><td class=\"num\">4,000</td></tr></tbody></table><p class=\"unit\">All figures in EUR thousands.</p>"
       }
     ]
   }

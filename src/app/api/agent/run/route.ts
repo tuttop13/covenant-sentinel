@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 const RUNS_DIR = join(process.cwd(), appConfig.paths.dataDir, 'runs');
-const LAST_RUN = join(RUNS_DIR, 'last-run.json');
+const lastRunFile = (docId: string) => join(RUNS_DIR, `last-run-${docId}.json`);
 
 const sseHeaders = {
   'Content-Type': 'text/event-stream',
@@ -17,17 +17,19 @@ const sseHeaders = {
   Connection: 'keep-alive',
 };
 
+const defaultDocId = () => appConfig.demo.scenarios[1]?.docId ?? appConfig.demo.scenarios[0].docId;
+
 /**
- * GET /api/agent/run?docId=q3-2025-filing        → live agent run (streamed)
- * GET /api/agent/run?replay=1                    → replay the last successful run
+ * GET /api/agent/run?docId=q3-2025-filing            → live agent run (streamed)
+ * GET /api/agent/run?replay=1&docId=q3-2025-filing   → replay that scenario's last run
  *
- * Every successful live run is persisted so the demo can be replayed instantly
- * (demo insurance: video recording, flaky wifi at judging, credit exhaustion).
+ * Every successful live run is persisted per scenario so the demo can be replayed
+ * instantly (demo insurance: video recording, flaky wifi at judging, credit exhaustion).
  */
 export async function GET(req: NextRequest) {
-  if (req.nextUrl.searchParams.get('replay')) return replayLastRun();
+  const docId = req.nextUrl.searchParams.get('docId') ?? defaultDocId();
+  if (req.nextUrl.searchParams.get('replay')) return replayLastRun(docId);
 
-  const docId = req.nextUrl.searchParams.get('docId') ?? appConfig.demo.arrivalDocId;
   const runId = `run-${Date.now().toString(36)}`;
   const encoder = new TextEncoder();
   const events: AgentEvent[] = [];
@@ -46,7 +48,7 @@ export async function GET(req: NextRequest) {
         await runAgent(docId, emit);
         if (events.some((e) => e.type === 'memo_final')) {
           mkdirSync(RUNS_DIR, { recursive: true });
-          writeFileSync(LAST_RUN, JSON.stringify(events, null, 1));
+          writeFileSync(lastRunFile(docId), JSON.stringify(events, null, 1));
         }
       } catch (e) {
         emit('error', 'Agent run failed', e instanceof Error ? e.message : String(e));
@@ -61,11 +63,12 @@ export async function GET(req: NextRequest) {
 }
 
 /** Stream a saved run with realistic pacing (tool latency compressed). */
-function replayLastRun(): Response {
-  if (!existsSync(LAST_RUN)) {
-    return Response.json({ error: 'No saved run to replay — do a live run first.' }, { status: 404 });
+function replayLastRun(docId: string): Response {
+  const file = lastRunFile(docId);
+  if (!existsSync(file)) {
+    return Response.json({ error: `No saved run for ${docId} — do a live run first.` }, { status: 404 });
   }
-  const events = JSON.parse(readFileSync(LAST_RUN, 'utf-8')) as AgentEvent[];
+  const events = JSON.parse(readFileSync(file, 'utf-8')) as AgentEvent[];
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({

@@ -1,5 +1,6 @@
 import OpenAI from 'openai';
 import { appConfig } from '@/config/app.config';
+import type { RunUsage } from '@/lib/types';
 import { mockComplete } from './mock';
 
 export interface LLMMessage {
@@ -7,13 +8,48 @@ export interface LLMMessage {
   content: string;
 }
 
-export interface LLMUsage {
-  calls: number;
-  promptTokens: number;
-  completionTokens: number;
+/**
+ * Per-run usage/cost accounting. The orchestrator installs a tracker at run
+ * start; every completion (and rerank call) records into it, priced with the
+ * Vultr public price list — so the demo can show the real cost of a run.
+ */
+export class RunUsageTracker {
+  private byModel = new Map<string, { calls: number; promptTokens: number; completionTokens: number }>();
+
+  record(model: string, promptTokens: number, completionTokens: number): void {
+    const m = this.byModel.get(model) ?? { calls: 0, promptTokens: 0, completionTokens: 0 };
+    m.calls += 1;
+    m.promptTokens += promptTokens;
+    m.completionTokens += completionTokens;
+    this.byModel.set(model, m);
+  }
+
+  snapshot(): RunUsage {
+    const pricing = appConfig.llm.pricingPer1M;
+    const byModel = [...this.byModel.entries()].map(([model, m]) => {
+      const p = pricing[model] ?? { in: 0, out: 0 };
+      return {
+        model,
+        ...m,
+        costUsd: (m.promptTokens * p.in + m.completionTokens * p.out) / 1_000_000,
+      };
+    });
+    return {
+      byModel,
+      totalCalls: byModel.reduce((s, m) => s + m.calls, 0),
+      totalTokens: byModel.reduce((s, m) => s + m.promptTokens + m.completionTokens, 0),
+      totalCostUsd: byModel.reduce((s, m) => s + m.costUsd, 0),
+    };
+  }
 }
 
-export const usageCounter: LLMUsage = { calls: 0, promptTokens: 0, completionTokens: 0 };
+let activeTracker: RunUsageTracker | null = null;
+export function setActiveTracker(t: RunUsageTracker | null): void {
+  activeTracker = t;
+}
+export function recordUsage(model: string, promptTokens: number, completionTokens: number): void {
+  activeTracker?.record(model, promptTokens, completionTokens);
+}
 
 let client: OpenAI | null = null;
 function getClient(): OpenAI {
@@ -28,33 +64,37 @@ function getClient(): OpenAI {
   return client;
 }
 
+/** Model per role: Skeptic, triage and judge deliberately run on different brains than Sentinel. */
+function modelForTag(tag: string): string {
+  const cfg = appConfig.llm.vultr;
+  if (tag === 'skeptic') return cfg.skepticModel;
+  if (tag === 'triage') return cfg.triageModel;
+  if (tag === 'judge') return cfg.judgeModel;
+  return cfg.model;
+}
+
 /**
  * Single entry point for every LLM call in the app.
- * `tag` identifies the call site (plan | investigate | draft | skeptic)
- * — picks the model per role: The Skeptic deliberately runs on a different
- * model than Sentinel so the reviewer doesn't share the drafter's blind spots.
+ * `tag` identifies the call site (triage | plan | investigate | draft | skeptic | judge).
  */
 export async function complete(
   tag: string,
   messages: LLMMessage[],
   opts?: { maxTokens?: number },
 ): Promise<string> {
-  usageCounter.calls += 1;
-
   if (appConfig.llm.provider === 'mock') {
     return mockComplete(tag, messages);
   }
 
   const cfg = appConfig.llm.vultr;
-  const model = tag === 'skeptic' ? cfg.skepticModel : cfg.model;
+  const model = modelForTag(tag);
   const res = await getClient().chat.completions.create({
     model,
     messages,
     temperature: cfg.temperature,
     max_tokens: opts?.maxTokens ?? cfg.maxTokensByTag[tag] ?? cfg.maxTokensByTag.default,
   });
-  usageCounter.promptTokens += res.usage?.prompt_tokens ?? 0;
-  usageCounter.completionTokens += res.usage?.completion_tokens ?? 0;
+  recordUsage(model, res.usage?.prompt_tokens ?? 0, res.usage?.completion_tokens ?? 0);
   return res.choices[0]?.message?.content ?? '';
 }
 

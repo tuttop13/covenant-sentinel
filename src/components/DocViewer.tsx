@@ -34,27 +34,27 @@ export function DocViewer({
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-6 backdrop-blur-sm" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-6 backdrop-blur-sm" onClick={onClose}>
       <div className="flex max-h-full w-full max-w-3xl flex-col gap-3" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between rounded-lg border border-slate-700 bg-slate-900/90 px-4 py-2">
+        <div className="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 shadow-sm">
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-slate-100">{doc.title}</p>
-            <p className="text-[11px] text-slate-400">{doc.type.toUpperCase()} · dated {doc.date} · page {p.n} / {doc.pages.length}</p>
+            <p className="truncate text-sm font-semibold text-gray-900">{doc.title}</p>
+            <p className="text-[11px] text-gray-500">{doc.type.toUpperCase()} · dated {doc.date} · page {p.n} / {doc.pages.length}</p>
           </div>
           <div className="flex items-center gap-1.5">
             <button
               onClick={() => onNav(Math.max(1, p.n - 1))}
               disabled={p.n <= 1}
-              className="rounded border border-slate-700 px-2.5 py-1 text-xs text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30"
+              className="rounded border border-gray-300 bg-white px-2.5 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-30"
             >← Prev</button>
             <button
               onClick={() => onNav(Math.min(doc.pages.length, p.n + 1))}
               disabled={p.n >= doc.pages.length}
-              className="rounded border border-slate-700 px-2.5 py-1 text-xs text-slate-300 transition-colors hover:bg-slate-800 disabled:opacity-30"
+              className="rounded border border-gray-300 bg-white px-2.5 py-1 text-xs text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-30"
             >Next →</button>
             <button
               onClick={onClose}
-              className="ml-2 rounded border border-slate-700 px-2.5 py-1 text-xs text-slate-300 transition-colors hover:bg-red-500/20 hover:text-red-200"
+              className="ml-2 rounded border border-gray-300 bg-white px-2.5 py-1 text-xs text-gray-700 transition-colors hover:bg-red-50 hover:text-red-700"
             >✕ Close</button>
           </div>
         </div>
@@ -75,7 +75,7 @@ export function DocViewer({
         </div>
 
         {quote && !found && (
-          <div className="rounded-lg border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-xs text-amber-200">
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
             Cited passage (not auto-located on this page): “{quote}”
           </div>
         )}

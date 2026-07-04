@@ -17,62 +17,79 @@ export interface Covenant {
   clause: string;
 }
 
+export interface Scenario {
+  docId: string;
+  label: string;
+  hint: string;
+}
+
 export function Inbox({
-  docs, covenants, arrivalDocId, arrived, running, onArrive, onReplay, onReset, onOpenDoc,
+  docs, covenants, scenarios, activeDocId, arrived, running, onArrive, onReplay, onReset, onOpenDoc,
 }: {
   docs: CorpusDocument[];
   covenants: Covenant[];
-  arrivalDocId: string;
+  scenarios: Scenario[];
+  activeDocId: string | null;
   arrived: boolean;
   running: boolean;
-  onArrive: () => void;
-  onReplay: () => void;
+  onArrive: (docId: string) => void;
+  onReplay: (docId: string) => void;
   onReset: () => void;
   onOpenDoc: (docId: string) => void;
 }) {
-  const filing = docs.find((d) => d.id === arrivalDocId);
-  const indexed = docs.filter((d) => d.id !== arrivalDocId);
+  const arrivalIds = new Set(scenarios.map((s) => s.docId));
+  const filing = activeDocId ? docs.find((d) => d.id === activeDocId) : null;
+  const indexed = docs.filter((d) => !arrivalIds.has(d.id));
 
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="rounded-lg border border-indigo-500/30 bg-indigo-500/5 p-3">
-        <h3 className="text-[11px] font-semibold uppercase tracking-[0.14em] text-indigo-300">Document inbox</h3>
+    <div className="flex flex-col gap-4 bg-white p-4">
+      <div className="rounded-lg border border-indigo-300 bg-indigo-50 p-3">
+        <h3 className="text-[11px] font-bold uppercase tracking-[0.14em] text-indigo-700">Document inbox</h3>
         {!arrived ? (
           <>
-            <p className="mt-1.5 text-xs leading-relaxed text-slate-400">
-              Sentinel monitors this inbox. New filings wake it automatically.
+            <p className="mt-1.5 text-xs leading-relaxed text-slate-600">
+              Sentinel monitors this inbox. Pick which filing arrives — the agent decides the outcome on its own.
             </p>
-            <button
-              onClick={onArrive}
-              disabled={!filing}
-              className="mt-3 w-full rounded-lg border border-indigo-400/50 bg-indigo-500/20 px-3 py-2.5 text-sm font-semibold text-indigo-100 transition-all hover:bg-indigo-500/35 hover:shadow-[0_0_20px_rgba(99,102,241,0.25)] disabled:opacity-40"
-            >
-              📬 Simulate arrival: Q3-2025 filing
-            </button>
-            <button
-              onClick={onReplay}
-              className="mt-1.5 w-full rounded border border-slate-700 px-2 py-1.5 text-[11px] text-slate-400 transition-colors hover:bg-slate-800"
-              title="Instantly replay the last saved live run (no API calls)"
-            >
-              ▶ Replay last live run
-            </button>
+            <div className="mt-3 flex flex-col gap-1.5">
+              {scenarios.map((s) => (
+                <div key={s.docId} className="flex items-stretch gap-1">
+                  <button
+                    onClick={() => onArrive(s.docId)}
+                    className="flex flex-1 items-center justify-between rounded-lg border border-indigo-300 bg-indigo-600 px-3 py-2 text-left transition-all hover:bg-indigo-700"
+                  >
+                    <span className="text-xs font-semibold text-white">📬 {s.label}</span>
+                    <span className="text-[10px] text-indigo-200">{s.hint}</span>
+                  </button>
+                  <button
+                    onClick={() => onReplay(s.docId)}
+                    className="rounded border border-slate-300 bg-white px-2 text-[11px] font-medium text-slate-600 transition-colors hover:bg-slate-100"
+                    title={`Replay the last saved live run for ${s.label} (no API calls)`}
+                  >
+                    ▶
+                  </button>
+                </div>
+              ))}
+            </div>
+            <p className="mt-2 text-[10px] leading-relaxed text-slate-500">
+              ▶ replays that scenario&apos;s last live run instantly, without API calls.
+            </p>
           </>
         ) : (
           <div className="mt-2 flex flex-col gap-2">
             <button
               onClick={() => filing && onOpenDoc(filing.id)}
-              className="flex items-start gap-2 rounded-lg border border-indigo-400/40 bg-indigo-500/15 p-2.5 text-left transition-colors hover:bg-indigo-500/25"
+              className="flex items-start gap-2 rounded-lg border border-indigo-300 bg-white p-2.5 text-left transition-colors hover:bg-indigo-50"
             >
               <span>📬</span>
               <span className="min-w-0">
-                <span className="block truncate text-xs font-semibold text-slate-100">{filing?.title}</span>
-                <span className="text-[10px] text-indigo-300">{running ? '● being processed by Sentinel' : '✓ processed'}</span>
+                <span className="block truncate text-xs font-semibold text-slate-900">{filing?.title ?? activeDocId}</span>
+                <span className="text-[10px] font-medium text-indigo-600">{running ? '● being processed by Sentinel' : '✓ processed'}</span>
               </span>
             </button>
             <button
               onClick={onReset}
               disabled={running}
-              className="rounded border border-slate-700 px-2 py-1.5 text-[11px] text-slate-400 transition-colors hover:bg-slate-800 disabled:opacity-40"
+              className="rounded border border-slate-300 bg-white px-2 py-1.5 text-[11px] font-medium text-slate-700 transition-colors hover:bg-slate-100 disabled:opacity-40"
             >
               ↺ Reset demo
             </button>
@@ -81,13 +98,13 @@ export function Inbox({
       </div>
 
       <div>
-        <h3 className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">Covenant watchlist</h3>
+        <h3 className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">Covenant watchlist</h3>
         <div className="flex flex-col gap-1.5">
           {covenants.map((c) => (
-            <div key={c.id} className="rounded-lg border border-slate-700/70 bg-slate-900/40 px-2.5 py-2">
+            <div key={c.id} className="rounded-lg border border-slate-300 bg-slate-50 px-2.5 py-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-slate-200">{c.label}</span>
-                <span className="font-mono text-xs text-slate-300">{c.threshold}</span>
+                <span className="text-xs font-semibold text-slate-900">{c.label}</span>
+                <span className="font-mono text-xs font-semibold text-slate-800">{c.threshold}</span>
               </div>
               <span className="text-[10px] text-slate-500">Senior Facilities Agreement {c.clause} · tested quarterly</span>
             </div>
@@ -96,19 +113,19 @@ export function Inbox({
       </div>
 
       <div>
-        <h3 className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-400">
-          Indexed credit file <span className="text-slate-600">({indexed.length} docs)</span>
+        <h3 className="mb-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
+          Indexed credit file <span className="text-slate-400">({indexed.length} docs)</span>
         </h3>
         <div className="flex flex-col gap-1">
           {indexed.map((d) => (
             <button
               key={d.id}
               onClick={() => onOpenDoc(d.id)}
-              className="flex items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-left transition-colors hover:border-slate-700 hover:bg-slate-800/60"
+              className="flex items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-left transition-colors hover:border-slate-300 hover:bg-slate-100"
             >
               <span className="text-sm">{TYPE_ICON[d.type] ?? '📄'}</span>
               <span className="min-w-0 flex-1">
-                <span className="block truncate text-[11px] font-medium text-slate-300">{d.title}</span>
+                <span className="block truncate text-[11px] font-medium text-slate-800">{d.title}</span>
                 <span className="text-[10px] text-slate-500">{d.date} · {d.pages.length}p</span>
               </span>
             </button>
